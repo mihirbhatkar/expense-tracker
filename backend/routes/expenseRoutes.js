@@ -9,6 +9,6 @@ import { protect } from "../middleware/authMiddleware.js";
 
 router.route("/add").post(protect, addExpense);
 router.route("/delete").post(protect, deleteExpense);
-router.route("/update").post(protect, updateExpense);
+router.route("/updateExpense").put(protect, updateExpense);
 
 export default router;

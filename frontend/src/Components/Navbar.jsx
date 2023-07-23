@@ -25,7 +25,7 @@ const Navbar = () => {
     <div className="navbar bg-base-100 font-semibold">
       <div className="flex-1">
         <Link className="btn btn-ghost normal-case text-xl font-bold" to={"/"}>
-          template
+          🪙coinSense
         </Link>
       </div>
       <div className="flex-none">

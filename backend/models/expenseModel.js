@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 
 const ExpensesSchema = mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    walletId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Wallet",
+      required: true,
+    },
     category: {
       type: String,
       required: true,
