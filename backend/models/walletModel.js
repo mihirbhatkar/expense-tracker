@@ -2,13 +2,21 @@ import mongoose from "mongoose";
 
 const WalletSchema = mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     monthlyLimit: {
       type: Number,
       required: true,
     },
     currentBalance: {
       type: Number,
+      required: true,
+    },
+    walletName: {
+      type: String,
       required: true,
     },
   },

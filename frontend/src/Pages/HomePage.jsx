@@ -10,8 +10,8 @@ const HomePage = () => {
           <>Welcome, {userInfo.name}👋</>
         ) : (
           <>
-            <h1>Landing Page</h1>
-            <div className="text-sm mt-6">More description here...</div>
+            <h1 className="text-9xl">🪙</h1>
+            <h1 className="text-7xl font-extrabold mt-4">coinSense!</h1>
           </>
         )}
       </div>

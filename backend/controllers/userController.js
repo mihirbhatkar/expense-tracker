@@ -36,23 +36,20 @@ const registerUser = asyncHandler(async (req, res) => {
     password: password,
   });
 
-  const newWallet = await Wallet.create({
-    user: user._id,
-    monthlyLimit: walletAmount,
-    currentBalance: walletAmount,
-  });
+  // const newWallet = await Wallet.create({
+  //   user: user._id,
+  //   monthlyLimit: walletAmount,
+  //   currentBalance: walletAmount,
+  // });
 
   if (user) {
     generateToken(res, user._id);
 
-    res
-      .status(201)
-      .json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        wallet: newWallet,
-      });
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    });
   } else {
     res.status(400);
     throw new Error("Invalid user data");
@@ -92,8 +89,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       userWithSameEmail &&
       userWithSameEmail._id.valueOf() !== user._id.valueOf()
     ) {
-      console.log(userWithSameEmail._id.valueOf());
-      console.log(user._id.valueOf());
       res.status(406);
       throw new Error("This email already exists. Try different one.");
     }
