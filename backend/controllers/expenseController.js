@@ -8,7 +8,8 @@ import Wallet from "../models/walletModel.js";
 // @access private
 const addExpense = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  if (user) {
+  const userWallet = await Wallet.findOne({ _id: req.body.walletId });
+  if (user && userWallet) {
     const newExpense = new Expenses({
       walletId: req.body.walletId,
       category: req.body.category,
@@ -20,7 +21,6 @@ const addExpense = asyncHandler(async (req, res) => {
     const exp = await newExpense.save();
 
     // subtracting amount from user's wallet
-    const userWallet = await Wallet.findOne({ _id: req.body.walletId });
     userWallet.currentBalance =
       userWallet.currentBalance - Number(req.body.amount);
     await userWallet.save();
@@ -32,7 +32,7 @@ const addExpense = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(404);
-    throw new Error("User not found!");
+    throw new Error("Wallet not found!");
   }
 });
 
@@ -41,13 +41,14 @@ const addExpense = asyncHandler(async (req, res) => {
 // @access private
 const deleteExpense = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  if (user) {
+  const userWallet = await Wallet.findOne({ _id: deletedExpense.walletId });
+  if (user && userWallet) {
     const deletedExpense = await Expenses.findOneAndDelete({
       _id: req.body.expenseId,
     });
 
     // adding amount to user's wallet
-    const userWallet = await Wallet.findOne({ _id: deletedExpense.walletId });
+
     userWallet.currentBalance =
       userWallet.currentBalance + Number(deletedExpense.amount);
     await userWallet.save();
@@ -57,7 +58,7 @@ const deleteExpense = asyncHandler(async (req, res) => {
       .json({ userWallet, message: "Expense deleted successfully" });
   } else {
     res.status(404);
-    throw new Error("User not found!");
+    throw new Error("Wallet not found!");
   }
 });
 
@@ -66,8 +67,9 @@ const deleteExpense = asyncHandler(async (req, res) => {
 // @access private
 const updateExpense = asyncHandler(async (req, res) => {
   const expense = await Expenses.findById(req.body.expenseId);
+  const userWallet = await Wallet.findOne({ _id: expense.walletId });
   // const user = await User.findById(req.user._id);
-  if (expense) {
+  if (expense && userWallet) {
     expense.category = req.body.category || expense.category;
     expense.dateOfExpense = req.body.date || expense.dateOfExpense;
     expense.description = req.body.description || expense.description;
@@ -76,7 +78,7 @@ const updateExpense = asyncHandler(async (req, res) => {
     expense.amount = Number(req.body.amount) || Number(expense.amount);
 
     // updating amount from user's wallet
-    const userWallet = await Wallet.findOne({ _id: expense.walletId });
+
     userWallet.currentBalance =
       userWallet.currentBalance + oldAmount - expense.amount;
     await userWallet.save();
