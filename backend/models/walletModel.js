@@ -31,8 +31,6 @@ const WalletSchema = mongoose.Schema(
 
 WalletSchema.pre("findOneAndDelete", async function (next) {
   const walletId = this._conditions._id;
-  console.log(mongoose.model("Expenses"));
-  console.log(walletId);
   try {
     await mongoose.model("Expenses").deleteMany({ walletId: walletId });
     next();
