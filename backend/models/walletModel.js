@@ -19,11 +19,27 @@ const WalletSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    addedAmount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
   }
 );
+
+WalletSchema.pre("findOneAndDelete", async function (next) {
+  const walletId = this._conditions._id;
+  console.log(mongoose.model("Expenses"));
+  console.log(walletId);
+  try {
+    await mongoose.model("Expenses").deleteMany({ walletId: walletId });
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 const Wallet = mongoose.model("Wallet", WalletSchema);
 
