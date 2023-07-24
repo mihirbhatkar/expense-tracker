@@ -3,15 +3,15 @@ import Expenses from "../models/expenseModel.js";
 import User from "../models/userModel.js";
 import Wallet from "../models/walletModel.js";
 
-// receives expense data and wallet id { ...expenseData, walletId }
+// receives expense data and wallet id { ...expenseData } // wallet id is in params
 // route - POST /api/expenses/addExpense
 // @access private
 const addExpense = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  const userWallet = await Wallet.findOne({ _id: req.body.walletId });
+  const userWallet = await Wallet.findOne({ _id: req.params.id });
   if (user && userWallet) {
     const newExpense = new Expenses({
-      walletId: req.body.walletId,
+      walletId: userWallet._id,
       category: req.body.category,
       amount: req.body.amount,
       dateOfExpense: req.body.date,
@@ -40,33 +40,25 @@ const addExpense = asyncHandler(async (req, res) => {
 // route - POST /api/expenses/deleteExpense
 // @access private
 const deleteExpense = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const deletedExpense = await Expenses.findOneAndDelete({
+    _id: req.params.id,
+  });
+
+  // adding amount to user's wallet
+
   const userWallet = await Wallet.findOne({ _id: deletedExpense.walletId });
-  if (user && userWallet) {
-    const deletedExpense = await Expenses.findOneAndDelete({
-      _id: req.body.expenseId,
-    });
+  userWallet.currentBalance =
+    userWallet.currentBalance + Number(deletedExpense.amount);
+  await userWallet.save();
 
-    // adding amount to user's wallet
-
-    userWallet.currentBalance =
-      userWallet.currentBalance + Number(deletedExpense.amount);
-    await userWallet.save();
-
-    res
-      .status(200)
-      .json({ userWallet, message: "Expense deleted successfully" });
-  } else {
-    res.status(404);
-    throw new Error("Wallet not found!");
-  }
+  res.status(200).json({ userWallet, message: "Expense deleted successfully" });
 });
 
 // receives user data and expense data, makes changes to expense { ...newExpenseData, expenseId }
 // route - POST /api/expenses/updateExpense
 // @access private
 const updateExpense = asyncHandler(async (req, res) => {
-  const expense = await Expenses.findById(req.body.expenseId);
+  const expense = await Expenses.findById(req.params.id);
   const userWallet = await Wallet.findOne({ _id: expense.walletId });
   // const user = await User.findById(req.user._id);
   if (expense && userWallet) {

@@ -3,7 +3,7 @@ import User from "../models/userModel.js";
 import Wallet from "../models/walletModel.js";
 
 // receives wallet data => object { monthlyLimit, walletName }
-// route - POST /api/wallet/add
+// route - POST /api/wallets/add
 // @access private
 const addWallet = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -28,28 +28,34 @@ const addWallet = asyncHandler(async (req, res) => {
   res.status(200).json({ newWallet, message: "Wallet saved successfully!" });
 });
 
-// receives wallet data => object { addAmount , walletId }
-// route - PUT /api/wallet/update
+// receives wallet data => object { addAmount  }
+// route - PUT /api/wallets/update/:id
 // @access private
 const updateWallet = asyncHandler(async (req, res) => {
   const wallet = await Wallet.findOne({
-    _id: req.body.walletId,
+    _id: req.params.id,
   });
-  wallet.monthlyLimit += req.body.addAmount;
-  wallet.currentBalance += req.body.addAmount;
-  wallet.addedAmount += req.body.addMount;
+  if (!wallet) {
+    res.status(404);
+    throw new Error("Wallet not found!");
+  }
+  const addAmount = Number(req.body.addAmount);
+  wallet.walletName = req.body.walletName || wallet.walletName;
+  wallet.monthlyLimit += addAmount;
+  wallet.currentBalance += addAmount;
+  wallet.addedAmount += addAmount;
 
   await wallet.save();
 
   res.status(200).json({ wallet, message: "Wallet saved successfully!" });
 });
 
-// receives wallet data => object { addAmount , walletId }
-// route - POST /api/wallet/delete
+// receives wallet id
+// route - POST /api/wallets/delete/:id
 // @access private
 const deleteWallet = asyncHandler(async (req, res) => {
   const wallet = await Wallet.findOneAndDelete({
-    _id: req.body.walletId,
+    _id: req.params.id,
   });
 
   res.status(200).json({ wallet, message: "Wallet removed successfully!" });
