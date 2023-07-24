@@ -1,23 +1,23 @@
 import { apiSlice } from "./apiSlice";
 
-const WALLETS_URL = "/api/wallet";
+const WALLETS_URL = "/api/wallets";
 
 export const walletsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createWallet: builder.mutation({
       query: (data) => ({
-        url: `${WALLETS_URL}/add`,
+        url: `${WALLETS_URL}`,
         method: "POST",
         body: data,
       }),
     }),
-    // updateWallet: builder.mutation({
-    //   query: (data) => ({
-    //     url: `${WALLETS_URL}/update`,
-    //     method: "PUT",
-    //     body: data,
-    //   }),
-    // }),
+    updateWallet: builder.mutation({
+      query: (data) => ({
+        url: `${WALLETS_URL}/${data.id}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
     getAllWallets: builder.mutation({
       query: () => ({
         url: `${WALLETS_URL}/all`,
@@ -25,13 +25,11 @@ export const walletsApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     deleteWallet: builder.mutation({
-      query: (data) => ({
-        url: `${WALLETS_URL}/delete`,
-        method: "POST",
-        body: data,
+      query: (deleteId) => ({
+        url: `${WALLETS_URL}/${deleteId}`,
+        method: "DELETE",
       }),
     }),
-    // Add more wallet-related mutations as needed
   }),
 });
 
@@ -39,5 +37,5 @@ export const {
   useCreateWalletMutation,
   useUpdateWalletMutation,
   useGetAllWalletsMutation,
-  // Add more exported hooks for other wallet-related mutations
+  useDeleteWalletMutation,
 } = walletsApiSlice;
