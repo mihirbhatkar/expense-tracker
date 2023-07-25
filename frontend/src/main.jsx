@@ -17,6 +17,7 @@ import HomePage from "./Pages/HomePage.jsx";
 import LoginPage from "./Pages/LoginPage.jsx";
 import RegisterPage from "./Pages/RegisterPage.jsx";
 import ProfilePage from "./Pages/ProfilePage.jsx";
+import WalletsPage from "./Pages/WalletsPage.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
       {/* these are the protected routes  */}
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/wallets" element={<WalletsPage />} />
       </Route>
     </Route>
   )
