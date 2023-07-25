@@ -7,7 +7,6 @@ import Wallet from "../models/walletModel.js";
 // @access private
 const addWallet = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  console.log(req.body);
   // to avoid same wallet name
   const userHasSameWalletName = await Wallet.findOne({
     userId: user._id,
