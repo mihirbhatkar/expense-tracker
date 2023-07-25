@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeSwitcher from "./Components/ThemeSwitcher.jsx";
+import WalletSelector from "./Components/WalletSelector.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "./Slices/usersApiSlice.js";
 import { clearCredentials } from "./Slices/authSlices.js";
@@ -58,7 +59,7 @@ function App() {
                     </svg>
                   </label>
                   <Link className="text-3xl p-2 font-bold lg:hidden " to={"/"}>
-                    🪙coinSense
+                    💵
                   </Link>
                 </div>
                 <div className="flex-none">
@@ -68,6 +69,8 @@ function App() {
                     </li>
                     {userInfo ? (
                       <>
+                        <WalletSelector />
+
                         <li className="dropdown dropdown-end">
                           <label tabIndex={0} className="m-1 text-lg">
                             <AiFillSetting></AiFillSetting>
@@ -99,9 +102,9 @@ function App() {
                 </div>
               </div>
             </div>
-            <div className="">
-              <Outlet />
-            </div>
+
+            <Outlet />
+
             {/* Page content here */}
           </div>
           <div className="drawer-side z-40">
@@ -110,10 +113,15 @@ function App() {
               {/* Sidebar content here */}
               <li className="  mb-4">
                 <Link className="text-3xl p-2 font-bold" to={"/"}>
-                  🪙coinSense
+                  💵stackSense
                 </Link>
               </li>
-
+              <li>
+                <Link to={"/"}>Home</Link>
+              </li>
+              <li>
+                <Link to={"/expenses"}>Expenses</Link>
+              </li>
               <li>
                 <Link to={"/wallets"}>Wallets</Link>
               </li>

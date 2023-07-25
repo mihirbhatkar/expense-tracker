@@ -7,7 +7,6 @@ const HomePage = () => {
   return userInfo ? (
     <div className="p-4 lg:grid lg:grid-cols-2 flex flex-col gap-4 justify-self-center">
       <AddExpense />
-      <AddExpense />
     </div>
   ) : (
     <div className="text-center">

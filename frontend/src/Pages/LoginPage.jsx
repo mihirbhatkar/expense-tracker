@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import { useLoginMutation } from "../Slices/usersApiSlice";
+import { useGetAllWalletsMutation } from "../Slices/walletsApiSlice";
+import { setUserWallets } from "../Slices/walletsSlice";
 import { setCredentials } from "../Slices/authSlices";
+
 import { toast } from "react-toastify";
 import Loader from "../Components/Loader";
 
@@ -14,6 +18,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const [login, { isLoading }] = useLoginMutation();
+  const [getAllWallets] = useGetAllWalletsMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -26,8 +31,10 @@ const LoginPage = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await login({ email, password }).unwrap(); // this returns a promise so we unwrap it
+      const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
+      const wallets = await getAllWallets();
+      dispatch(setUserWallets(wallets.data));
       navigate("/");
     } catch (error) {
       toast.error(error?.data?.message || error.error);
