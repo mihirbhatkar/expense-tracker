@@ -16,7 +16,7 @@ export const expensesApiSlice = apiSlice.injectEndpoints({
 
     // Add a new expense
     addExpense: builder.mutation({
-      query: (data, walletId) => ({
+      query: ({ data, walletId }) => ({
         url: `${EXPENSES_URL}/${walletId}`,
         method: "POST",
         body: data,

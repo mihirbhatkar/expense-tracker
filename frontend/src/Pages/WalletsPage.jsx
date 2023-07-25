@@ -9,6 +9,7 @@ import {
   useUpdateWalletMutation,
   useGetAllWalletsMutation,
 } from "../Slices/walletsApiSlice";
+
 const WalletsPage = () => {
   const { wallets, selectedWallet } = useSelector((state) => state.wallets);
 
@@ -60,7 +61,6 @@ const WalletsPage = () => {
           <span className="text-3xl font-bold">Add Wallet</span>
           <form
             onSubmit={async (e) => {
-              console.log(e.target.walletName.value);
               e.preventDefault();
               try {
                 const res = await createWallet({
