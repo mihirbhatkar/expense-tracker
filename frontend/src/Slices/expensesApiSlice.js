@@ -6,10 +6,10 @@ const EXPENSES_URL = "/api/expenses";
 export const expensesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Fetch all expenses for a specific wallet
-    // ! DOESN'T EXIST YET
-    getAllExpenses: builder.query({
-      query: (walletId) => ({
-        url: `${EXPENSES_URL}/wallet/${walletId}`,
+
+    getRecentExpenses: builder.mutation({
+      query: () => ({
+        url: `${EXPENSES_URL}/recent`,
         method: "GET",
       }),
     }),
@@ -43,7 +43,7 @@ export const expensesApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetAllExpensesQuery,
+  useGetRecentExpensesMutation,
   useAddExpenseMutation,
   useUpdateExpenseMutation,
   useDeleteExpenseMutation,

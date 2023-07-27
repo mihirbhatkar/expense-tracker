@@ -18,6 +18,7 @@ import LoginPage from "./Pages/LoginPage.jsx";
 import RegisterPage from "./Pages/RegisterPage.jsx";
 import ProfilePage from "./Pages/ProfilePage.jsx";
 import WalletsPage from "./Pages/WalletsPage.jsx";
+import ExpensePage from "./Pages/ExpensePage.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/wallets" element={<WalletsPage />} />
+        <Route path="/expenses" element={<ExpensePage />} />
       </Route>
     </Route>
   )
@@ -36,8 +38,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
+    {/* <React.StrictMode> */}
+    <RouterProvider router={router} />
+    {/* </React.StrictMode> */}
   </Provider>
 );

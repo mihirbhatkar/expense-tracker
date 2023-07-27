@@ -21,12 +21,17 @@ const walletsSlice = createSlice({
     setUserWallets: (state, action) => {
       state.wallets = [...action.payload];
       state.selectedWallet = state.wallets[0];
-      // Save updated wallets to local storage
-      localStorage.setItem("userWallets", JSON.stringify(action.payload));
-      localStorage.setItem(
-        "selectedWallet",
-        JSON.stringify(state.selectedWallet)
-      );
+      if (state.wallets.length === 0) {
+        localStorage.setItem("userWallets", []);
+        localStorage.setItem("selectedWallet", null);
+      } else {
+        // Save updated wallets to local storage
+        localStorage.setItem("userWallets", JSON.stringify(action.payload));
+        localStorage.setItem(
+          "selectedWallet",
+          JSON.stringify(state.selectedWallet)
+        );
+      }
     },
 
     setSelectedWallet: (state, action) => {
