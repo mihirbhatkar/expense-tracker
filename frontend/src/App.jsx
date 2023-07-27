@@ -69,7 +69,7 @@ function App() {
                   </li>
 
                   <>
-                    <WalletSelector />
+                    {/* <WalletSelector /> */}
 
                     <li className="dropdown dropdown-end">
                       <label tabIndex={0} className="m-1 text-lg">

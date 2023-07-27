@@ -84,4 +84,21 @@ const updateExpense = asyncHandler(async (req, res) => {
   }
 });
 
-export { addExpense, deleteExpense, updateExpense };
+// returns recent expenses
+// route - GET /api/expenses/recent
+// @access private
+const recentExpenses = asyncHandler(async (req, res) => {
+  const wallets = await Wallet.find({ userId: req.user._id });
+  let walletIds = [];
+  wallets.forEach((element, index) => {
+    walletIds.push(element._id);
+  });
+
+  const recentExpenses = await Expenses.find({ walletId: { $in: walletIds } })
+    .sort({ dateOfExpense: -1 }) // -1 for descending order, 1 for ascending order
+    .limit(5);
+
+  res.status(200).json({ recentExpenses, message: "Recent expenses returned" });
+});
+
+export { addExpense, deleteExpense, updateExpense, recentExpenses };

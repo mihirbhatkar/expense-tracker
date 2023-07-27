@@ -13,7 +13,7 @@ import {
 const WalletsPage = () => {
   const { wallets, selectedWallet } = useSelector((state) => state.wallets);
 
-  const [walletName, setWalletName] = useState(selectedWallet.walletName);
+  const [walletName, setWalletName] = useState("");
   const [amount, setAmount] = useState(0);
 
   const [createWallet, { isLoading }] = useCreateWalletMutation();
@@ -33,29 +33,32 @@ const WalletsPage = () => {
       <div className=" flex flex-col lg:grid lg:grid-cols-2 gap-4 text-lg p-8">
         <div className="flex flex-col gap-4">
           <span className="text-3xl font-bold">All wallets.</span>
-          {wallets.map((item) => {
-            const dateString = item.updatedAt;
-            const date = new Date(dateString);
 
-            return (
-              <label htmlFor="my_modal_6" className="text-2xl font-semibold">
-                <div
-                  onClick={() => changeSelectedWallet(item)}
-                  key={item._id}
-                  className="flex h-20 btn flex-col bg-base-200 rounded-xl min-w-full items-center gap-4"
-                >
-                  <div className="rounded-xl w-full p-4">
-                    <div className="flex items-center justify-between">
-                      {item.walletName}
-                      <span className="text-xl font-semibold">
-                        &#8377;{item.currentBalance}
-                      </span>
+          {selectedWallet &&
+            wallets.map((item) => {
+              const dateString = item.updatedAt;
+              const date = new Date(dateString);
+
+              return (
+                <label htmlFor="my_modal_6" className="text-2xl font-semibold">
+                  <div
+                    onClick={() => changeSelectedWallet(item)}
+                    key={item._id}
+                    className="flex h-20 btn flex-col bg-base-200 rounded-xl min-w-full items-center gap-4"
+                  >
+                    <div className="rounded-xl w-full p-4">
+                      <div className="flex items-center justify-between">
+                        {item.walletName}
+                        <span className="text-xl font-semibold">
+                          Limit:&#8377;{item.monthlyLimit} , Balance: &#8377;
+                          {item.currentBalance}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </label>
-            );
-          })}
+                </label>
+              );
+            })}
         </div>
         <div className="bg-base-200 rounded-xl p-4 font-semibold">
           <span className="text-3xl font-bold">Add Wallet</span>

@@ -1,13 +1,15 @@
 import React from "react";
 import { useAddExpenseMutation } from "../Slices/expensesApiSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { setUserWallets } from "../Slices/walletsSlice";
+import { useGetAllWalletsMutation } from "../Slices/walletsApiSlice";
 import { toast } from "react-toastify";
-import Loader from "../Components/Loader";
 import WalletSelector from "../Components/WalletSelector.jsx";
+import Loader from "./Loader";
 
 const AddExpense = () => {
   const { selectedWallet } = useSelector((state) => state.wallets);
-
+  const [getAllWallets] = useGetAllWalletsMutation();
   const [addExpense, { isLoading }] = useAddExpenseMutation();
 
   const dispatch = useDispatch();
@@ -21,15 +23,15 @@ const AddExpense = () => {
           date: e.target.date.value,
           description: e.target.description.value,
         };
+
         try {
           const res = await addExpense({
             data: data,
             walletId: selectedWallet._id,
           }).unwrap();
+          const resWallets = await getAllWallets();
+          dispatch(setUserWallets(resWallets.data));
           toast.success(res.message);
-
-          const wallets = await getAllWallets();
-          dispatch(setUserWallets(wallets.data));
         } catch (error) {
           toast.error(error?.data?.message || error.error);
         }
@@ -89,9 +91,15 @@ const AddExpense = () => {
         className="input input-bordered w-full"
         required
       />
-      <button className="btn btn-accent mt-4 w-32" type="submit">
-        Add!
-      </button>
+      {isLoading ? (
+        <button className="btn btn-accent mt-4 w-32" type="submit">
+          <Loader />
+        </button>
+      ) : (
+        <button className="btn btn-accent mt-4 w-32" type="submit">
+          Add!
+        </button>
+      )}
     </form>
   );
 };
