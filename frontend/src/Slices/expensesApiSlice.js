@@ -39,10 +39,29 @@ export const expensesApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
+
+    // Search expenses
+    searchExpenses: builder.mutation({
+      query: (data) => ({
+        url: `${EXPENSES_URL}/all`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    // Search expense by name
+    searchByName: builder.mutation({
+      query: (data) => ({
+        url: `${EXPENSES_URL}/name`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
 export const {
+  useSearchByNameMutation,
+  useSearchExpensesMutation,
   useGetRecentExpensesMutation,
   useAddExpenseMutation,
   useUpdateExpenseMutation,

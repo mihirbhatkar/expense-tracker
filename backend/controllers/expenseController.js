@@ -101,4 +101,78 @@ const recentExpenses = asyncHandler(async (req, res) => {
   res.status(200).json({ recentExpenses, message: "Recent expenses returned" });
 });
 
-export { addExpense, deleteExpense, updateExpense, recentExpenses };
+// this function is for finding expenses in general
+// Route - POST /api/expenses/search
+// PRIVATE
+const searchExpenses = asyncHandler(async (req, res) => {
+  const startingDate = req.body.time.start; // typeof date
+  const endingDate = req.body.time.end; // typeof date
+
+  const categories = req.body.categories; // this is an array, there might be one or multiple categories
+
+  const wallets = req.body.wallets; // this is an array, there might be one or multiple wallets
+  let walletIds = [];
+  wallets.forEach((element, index) => {
+    walletIds.push(element._id);
+  });
+
+  const amountLowerLimit = req.body.amount.lower; // typeof number
+  const amountUpperLimit = req.body.amount.upper; // typeof number
+
+  // this function returns an array of expenses according to the above filters
+
+  const query = {};
+
+  if (startingDate && endingDate) {
+    query.dateOfExpense = { $gte: startingDate, $lte: endingDate };
+  }
+
+  if (categories && categories.length > 0) {
+    query.category = { $in: categories };
+  }
+
+  if (wallets && wallets.length > 0) {
+    query.walletId = { $in: walletIds };
+  }
+
+  if (amountLowerLimit !== undefined && amountUpperLimit !== undefined) {
+    query.amount = { $gte: amountLowerLimit, $lte: amountUpperLimit };
+  }
+
+  const expenses = await Expenses.find(query).sort({ dateOfExpense: -1 });
+
+  res.status(200).json(expenses);
+});
+
+const searchExpensesByDescription = asyncHandler(async (req, res) => {
+  const searchDescription = req.body.description;
+
+  const wallets = await Wallet.find({ userId: req.user._id });
+  let walletIds = [];
+  wallets.forEach((element, index) => {
+    walletIds.push(element._id);
+  });
+
+  // Create a regular expression for case-insensitive search
+  const searchRegex = new RegExp(searchDescription, "i");
+
+  // Construct the query to find expenses with similar description
+  const query = {
+    description: searchRegex,
+    walletId: { $in: walletIds },
+  };
+
+  // Execute the query to find expenses with similar description and sort them by descending dateOfExpense
+  const expenses = await Expenses.find(query).sort({ dateOfExpense: -1 });
+
+  res.status(200).json(expenses);
+});
+
+export {
+  addExpense,
+  deleteExpense,
+  updateExpense,
+  recentExpenses,
+  searchExpenses,
+  searchExpensesByDescription,
+};
