@@ -1,9 +1,149 @@
+import { useEffect, useState } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
+import Loader from "../Components/Loader";
+import { useSelector } from "react-redux";
+import TimeModal from "../Components/ExpensePage/TimeModal";
+import CategoriesModal from "../Components/ExpensePage/CategoriesModal";
+import WalletModal from "../Components/ExpensePage/WalletModal";
+import PricesModal from "../Components/ExpensePage/PricesModal";
+import SearchModal from "../Components/ExpensePage/SearchModal";
+import {
+  useGetRecentExpensesMutation,
+  useSearchByNameMutation,
+  useSearchExpensesMutation,
+} from "../Slices/expensesApiSlice";
+import EditExpenseModal from "../Components/ExpensePage/EditExpenseModal";
+
 const ExpensePage = () => {
+  const getDates = (startingDate) => {
+    const currentDate = new Date();
+    let targetMonth = currentDate.getMonth() - startingDate;
+    let targetYear = currentDate.getFullYear();
+
+    if (targetMonth < 0) {
+      targetMonth += 12;
+      targetYear -= 1;
+    }
+    // First date of the target month
+    const firstDate = new Date(targetYear, targetMonth, 1);
+    if (startingDate == 1) {
+      // for sending data of previous month
+      const nextMonthFirstDay = new Date(
+        targetYear,
+        targetMonth + 1 == 12 ? 0 : targetMonth + 1,
+        1
+      );
+      const lastDayOfMonth = new Date(nextMonthFirstDay - 1);
+
+      return { start: firstDate, end: lastDayOfMonth, type: startingDate };
+    }
+
+    return { start: firstDate, end: currentDate, type: startingDate };
+  };
+
+  const { wallets } = useSelector((state) => state.wallets);
+  let walletNames = {};
+  for (let i = 0; i < wallets.length; i++) {
+    walletNames[`${wallets[i]._id}`] = wallets[i].walletName;
+  }
+  const [walletList, setWalletList] = useState(wallets);
+
+  const categoriesList = ["Transportation", "Food"];
+  const [categories, setCategories] = useState(categoriesList);
+
+  const [dateRange, setDateRange] = useState(getDates(0));
+
+  const [priceRange, setPriceRange] = useState({
+    lower: 0,
+    upper: 10000, // !CHANGE THIS LATER IG?
+  });
+
+  const [results, setResults] = useState([]);
+
+  const [getRecentExpenses, { isLoading }] = useGetRecentExpensesMutation();
+  const [searchExpenses] = useSearchExpensesMutation();
+  const [searchByName] = useSearchByNameMutation();
+
+  useEffect(() => {
+    const getExp = async () => {
+      const exp = await getRecentExpenses().unwrap();
+      setResults(exp.recentExpenses);
+    };
+    getExp();
+  }, [wallets]);
+
+  const searchName = async (name) => {
+    const getExp = async () => {
+      const exp = await searchByName({ description: name }).unwrap();
+      setResults(exp);
+    };
+    getExp();
+  };
+
+  const searchResults = async () => {
+    const res = await searchExpenses({
+      time: dateRange,
+      categories: categories,
+      wallets: walletList,
+      amount: priceRange,
+    }).unwrap();
+    setResults(res);
+  };
+
   return (
-    <div className="flex flex-col p-8 gap-4 items-center">
-      <div>Search bar</div>
-      <div>Results</div>
-    </div>
+    <>
+      <div className="flex flex-col p-8 gap-4 items-center">
+        <div className="flex gap-4">
+          {/* TIME PERIOD MODAL */}
+          <TimeModal
+            getDates={getDates}
+            setDateRange={setDateRange}
+            dateRange={dateRange}
+          />
+
+          {/* CATEGORIES MODAL */}
+          <CategoriesModal
+            setCategories={setCategories}
+            categoriesList={categoriesList}
+          />
+
+          {/* WALLETS MODAL */}
+          <WalletModal
+            setWalletList={setWalletList}
+            walletList={walletList}
+            wallets={wallets}
+          />
+
+          {/* PRICES MODAL */}
+          <PricesModal setPriceRange={setPriceRange} priceRange={priceRange} />
+
+          {/* GENERAL SEARCH BUTTON */}
+          <button onClick={searchResults} className="btn btn-primary">
+            Search
+          </button>
+
+          {/* SEARCH MODAL */}
+          <SearchModal searchName={searchName} />
+        </div>
+
+        <div className="flex flex-col text-center gap-2">
+          <h1 className="text-4xl font-bold"> Results </h1>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            results.map((item) => {
+              return (
+                <EditExpenseModal
+                  key={item._id}
+                  item={item}
+                  wallet={walletNames[`${item.walletId}`]}
+                />
+              );
+            })
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 export default ExpensePage;
