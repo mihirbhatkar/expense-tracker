@@ -99,7 +99,7 @@ function App() {
         </div>
         <div className="drawer-side z-40">
           <label htmlFor="drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content text-lg">
+          <ul className="menu p-4 w-80 h-full bg-base-200 space-y-2 text-base-content text-lg">
             {/* Sidebar content here */}
             <li className="  mb-4">
               <Link className="text-3xl p-2 font-bold" to={"/"}>
