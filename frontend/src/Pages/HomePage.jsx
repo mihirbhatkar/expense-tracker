@@ -6,10 +6,11 @@ import Score from "../Components/Score.jsx";
 const HomePage = () => {
   const { userInfo } = useSelector((state) => state.auth);
   return userInfo ? (
-    <div className="p-4 lg:grid lg:grid-cols-2 flex flex-col gap-4 justify-self-center">
-      <AddExpense />
-      <RecentExpenses />
+    <div className="p-4 lg:grid lg:grid-cols-2 lg:justify-self-center gap-4 flex flex-col ">
+      <span className="font-bold">Welcome, {userInfo.name} 👋</span>
       <Score />
+      {/* <AddExpense /> */}
+      <RecentExpenses />
     </div>
   ) : (
     <div className="text-center flex justify-center items-center flex-col min-h-[var(--min-page-height)] text-4xl font-bold">
@@ -20,7 +21,7 @@ const HomePage = () => {
             stackSense!
           </h1>
         </div>
-        <div className="block w-96">
+        <div className="w-96">
           Financial <span className="text-emerald-500">finesse</span> <br /> at
           your fingertips. <br />
           <span className="text-xl font-light w-6 ">

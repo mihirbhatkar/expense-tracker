@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "./Slices/usersApiSlice.js";
 import { clearCredentials } from "./Slices/authSlices.js";
 import { AiFillSetting } from "react-icons/ai";
+import { clearWalletsData } from "./Slices/walletsSlice.js";
 
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -21,6 +22,7 @@ function App() {
     try {
       await logout().unwrap();
       dispatch(clearCredentials());
+      dispatch(clearWalletsData());
       navigate("/");
     } catch (error) {
       console.log("error");
@@ -117,6 +119,12 @@ function App() {
             </li>
             <li>
               <Link to={"/reports"}>Reports</Link>
+            </li>
+            <li>
+              <Link to={"/profile"}>Profile</Link>
+            </li>
+            <li>
+              <a onClick={logoutHandler}>Logout</a>
             </li>
           </ul>
         </div>
