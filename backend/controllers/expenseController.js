@@ -96,7 +96,7 @@ const recentExpenses = asyncHandler(async (req, res) => {
 
   const recentExpenses = await Expenses.find({ walletId: { $in: walletIds } })
     .sort({ dateOfExpense: -1 }) // -1 for descending order, 1 for ascending order
-    .limit(5);
+    .limit(3);
 
   res.status(200).json({ recentExpenses, message: "Recent expenses returned" });
 });

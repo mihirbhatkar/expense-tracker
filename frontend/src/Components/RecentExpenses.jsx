@@ -23,7 +23,6 @@ const RecentExpenses = () => {
     };
     getExp();
   }, [wallets]);
-  console.log(isLoading);
 
   return (
     <div className="p-4 bg-base-300 rounded-xl">

@@ -3,13 +3,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeSwitcher from "./Components/ThemeSwitcher.jsx";
-import WalletSelector from "./Components/WalletSelector.jsx";
 import Navbar from "./Components/Navbar.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "./Slices/usersApiSlice.js";
 import { clearCredentials } from "./Slices/authSlices.js";
 import { AiFillSetting } from "react-icons/ai";
 import { clearWalletsData } from "./Slices/walletsSlice.js";
+import AddExpense from "./Components/AddExpense.jsx";
 
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -65,31 +65,15 @@ function App() {
                 </Link>
               </div>
               <div className="flex-none">
-                <ul className="menu menu-horizontal px-1 space-x-2">
-                  <li className="mt-1 text-lg">
-                    <ThemeSwitcher />
-                  </li>
-
-                  <>
-                    {/* <WalletSelector /> */}
-
-                    <li className="dropdown dropdown-end">
-                      <label tabIndex={0} className="m-1 text-lg">
-                        <AiFillSetting></AiFillSetting>
-                      </label>
-                      <ul
-                        tabIndex={0}
-                        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                      >
-                        <li>
-                          <Link to={"/profile"}>Profile</Link>
-                        </li>
-                        <li>
-                          <a onClick={logoutHandler}>Logout</a>
-                        </li>
-                      </ul>
-                    </li>
-                  </>
+                <ul className="menu menu-horizontal px-1 space-x-4">
+                  {/* You can open the modal using ID.showModal() method */}
+                  <ThemeSwitcher />
+                  <label
+                    htmlFor="transactionModal"
+                    className="btn bg-emerald-400"
+                  >
+                    ADD TRANSACTION
+                  </label>
                 </ul>
               </div>
             </div>
@@ -127,6 +111,21 @@ function App() {
               <a onClick={logoutHandler}>Logout</a>
             </li>
           </ul>
+        </div>
+      </div>
+      {/* Put this part before </body> tag */}
+      <input type="checkbox" id="transactionModal" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box">
+          <AddExpense></AddExpense>
+          <div className="modal-action">
+            <label
+              htmlFor="transactionModal"
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
+              ✕
+            </label>
+          </div>
         </div>
       </div>
 

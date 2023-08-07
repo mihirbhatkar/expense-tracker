@@ -6,11 +6,14 @@ import { useGetAllWalletsMutation } from "../Slices/walletsApiSlice";
 import { toast } from "react-toastify";
 import WalletSelector from "../Components/WalletSelector.jsx";
 import Loader from "./Loader";
+import { categories } from "../Data/categoriesData";
 
 const AddExpense = () => {
   const { selectedWallet } = useSelector((state) => state.wallets);
   const [getAllWallets] = useGetAllWalletsMutation();
   const [addExpense, { isLoading }] = useAddExpenseMutation();
+
+  const categoriesList = Object.keys(categories);
 
   const dispatch = useDispatch();
   return (
@@ -47,8 +50,14 @@ const AddExpense = () => {
         <option disabled defaultChecked>
           Select a category
         </option>
-        <option value="Transportation">🚘Transportation</option>
-        <option value="Food">🍕Food and Drinks</option>
+        {categoriesList.map((item) => {
+          return (
+            <option key={item} value={item}>
+              {categories[item]}
+              {item}
+            </option>
+          );
+        })}
       </select>
       <WalletSelector />
 
