@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
+import { monthNames } from "../../Data/categoriesData";
 
 const MonthlyExpenses = ({ expenses }) => {
   // Prepare the data for the chart
@@ -15,7 +16,7 @@ const MonthlyExpenses = ({ expenses }) => {
     const month = new Date(expense.dateOfExpense).getMonth();
     monthlyExpenses[month] += expense.amount;
   });
-  // const months = ["Jan", "Feb"]
+
   const data = {
     labels: Object.keys(monthlyExpenses), // holds month names
     datasets: [

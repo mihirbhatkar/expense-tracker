@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useGetRecentExpensesMutation } from "../Slices/expensesApiSlice";
 import { useSelector } from "react-redux";
 import Loader from "./Loader";
+import { categories, monthNames, dayNames } from "../Data/categoriesData";
+import { Link } from "react-router-dom";
 
 const RecentExpenses = () => {
   const { wallets } = useSelector((state) => state.wallets);
@@ -11,7 +13,7 @@ const RecentExpenses = () => {
     walletNames[`${wallets[i]._id}`] = wallets[i].walletName;
   }
 
-  const [expenses, setExpenses] = useState(null);
+  const [expenses, setExpenses] = useState([]);
   const [getRecentExpenses, { isLoading }] = useGetRecentExpensesMutation();
 
   useEffect(() => {
@@ -23,18 +25,45 @@ const RecentExpenses = () => {
   }, [wallets]);
 
   return (
-    <div className="flex flex-col gap-4">
-      Recent Expenses.
-      {isLoading && <Loader />}
-      {expenses &&
-        expenses.map((item) => {
-          return (
-            <div key={item._id}>
-              {walletNames[`${item.walletId}`]}, {item.description},{" "}
-              {item.amount}, {item.dateOfExpense}
-            </div>
-          );
-        })}
+    <div className="p-4 bg-base-300 rounded-xl">
+      <div className="mb-4 flex justify-between">
+        <div className="font-bold ">Recent Expenses.</div>
+        <Link to="/expenses" className="text-sm  hover:underline ">
+          See all
+        </Link>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        {isLoading ? (
+          <Loader />
+        ) : (
+          expenses.map((item) => {
+            const dateString = item.dateOfExpense;
+            const date = new Date(dateString);
+            const month = monthNames[date.getMonth()];
+            const year = date.getFullYear();
+            const day = date.getDate();
+            const weekday = dayNames[date.getDay()];
+
+            return (
+              <div className="collapse bg-white rounded-xl" key={item._id}>
+                <input type="checkbox" />
+                <div className="collapse-title font-medium flex justify-between ">
+                  <div>
+                    {categories[`${item.category}`]}
+                    {item.description}
+                  </div>
+                  <div>{item.amount}</div>
+                </div>
+                <div className="collapse-content">
+                  Wallet: {walletNames[`${item.walletId}`]}, date:{" "}
+                  {`${day}/${date.getMonth() + 1}/${year}`}
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
     </div>
   );
 };

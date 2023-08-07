@@ -41,8 +41,16 @@ const walletsSlice = createSlice({
         JSON.stringify(state.selectedWallet)
       );
     },
+
+    clearWalletsData: (state, action) => {
+      state.wallets = [];
+      state.selectedWallet = null;
+      localStorage.removeItem("userWallets");
+      localStorage.removeItem("selectedWallet");
+    },
   },
 });
 
-export const { setUserWallets, setSelectedWallet } = walletsSlice.actions;
+export const { setUserWallets, setSelectedWallet, clearWalletsData } =
+  walletsSlice.actions;
 export default walletsSlice.reducer;

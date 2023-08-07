@@ -6,11 +6,14 @@ import { useGetAllWalletsMutation } from "../Slices/walletsApiSlice";
 import { toast } from "react-toastify";
 import WalletSelector from "../Components/WalletSelector.jsx";
 import Loader from "./Loader";
+import { categories } from "../Data/categoriesData";
 
 const AddExpense = () => {
   const { selectedWallet } = useSelector((state) => state.wallets);
   const [getAllWallets] = useGetAllWalletsMutation();
   const [addExpense, { isLoading }] = useAddExpenseMutation();
+
+  const categoriesList = Object.keys(categories);
 
   const dispatch = useDispatch();
   return (
@@ -36,7 +39,7 @@ const AddExpense = () => {
           toast.error(error?.data?.message || error.error);
         }
       }}
-      className="flex flex-col gap-4 items-start justify-self-center p-4 bg-base-200 rounded-xl"
+      className="flex flex-col gap-4 justify-self-center p-4 bg-base-200 rounded-xl"
     >
       <h1 className="text-2xl font-extrabold ">Add expense.</h1>
       <select
@@ -47,39 +50,42 @@ const AddExpense = () => {
         <option disabled defaultChecked>
           Select a category
         </option>
-        <option value="Transportation">🚘Transportation</option>
-        <option value="Food">🍕Food and Drinks</option>
+        {categoriesList.map((item) => {
+          return (
+            <option key={item} value={item}>
+              {categories[item]}
+              {item}
+            </option>
+          );
+        })}
       </select>
       <WalletSelector />
-      <div className="flex items-center gap-4">
-        <div className="space-x-2">
-          <label htmlFor="amount" className="mt-[10px] font-semibold">
-            Amount
-          </label>
-          <input
-            type="number"
-            name="amount"
-            min="0"
-            placeholder="enter amount"
-            id="username"
-            className="input input-bordered w-44"
-            required
-          />
-        </div>
-        <div className="space-x-2">
-          <label htmlFor="date" className="mt-[10px] font-semibold">
-            Date
-          </label>
-          <input
-            type="date"
-            name="date"
-            placeholder="enter date"
-            id="username"
-            required
-            className="input input-bordered "
-          />
-        </div>
-      </div>
+
+      <label htmlFor="amount" className="mt-[10px] font-semibold">
+        Amount
+      </label>
+      <input
+        type="number"
+        name="amount"
+        min="0"
+        placeholder="enter amount"
+        id="username"
+        className="input input-bordered "
+        required
+      />
+
+      <label htmlFor="date" className="mt-[10px] font-semibold">
+        Date
+      </label>
+      <input
+        type="date"
+        name="date"
+        placeholder="enter date"
+        id="username"
+        required
+        className="input input-bordered "
+      />
+
       <label htmlFor="description" className="mt-[10px] font-semibold">
         Description
       </label>
@@ -92,11 +98,11 @@ const AddExpense = () => {
         required
       />
       {isLoading ? (
-        <button className="btn btn-accent mt-4 w-32" type="submit">
+        <button className="btn btn-accent mt-4 " type="submit">
           <Loader />
         </button>
       ) : (
-        <button className="btn btn-accent mt-4 w-32" type="submit">
+        <button className="btn btn-accent mt-4 " type="submit">
           Add!
         </button>
       )}

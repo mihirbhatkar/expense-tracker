@@ -4,6 +4,7 @@ import MonthlyExpenses from "../Components/Charts/MonthlyExpenses";
 import { useSearchExpensesMutation } from "../Slices/expensesApiSlice";
 import Loader from "../Components/Loader";
 import CategoriesPie from "../Components/Charts/CategoriesPie";
+import { categories } from "../Data/categoriesData";
 
 const ReportsPage = () => {
   const getDates = (startingDate) => {
@@ -36,7 +37,7 @@ const ReportsPage = () => {
 
   const [expenses, setExpenses] = useState(null);
 
-  const categoriesList = ["Transportation", "Food"];
+  const categoriesList = Object.keys(categories);
 
   useEffect(() => {
     const getExp = async () => {
