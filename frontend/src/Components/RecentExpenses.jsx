@@ -28,7 +28,7 @@ const RecentExpenses = () => {
     <div className="p-4 bg-base-300 rounded-xl">
       <div className="mb-4 flex justify-between">
         <div className="font-bold ">Recent Expenses.</div>
-        <Link to="/expenses" className="text-sm  hover:underline ">
+        <Link to="/expenses" className="text-sm underline">
           See all
         </Link>
       </div>
@@ -55,9 +55,9 @@ const RecentExpenses = () => {
                   </div>
                   <div>{item.amount}</div>
                 </div>
-                <div className="collapse-content">
-                  Wallet: {walletNames[`${item.walletId}`]}, date:{" "}
-                  {`${day}/${date.getMonth() + 1}/${year}`}
+                <div className="collapse-content text-sm">
+                  Wallet: {walletNames[`${item.walletId}`]} |||
+                  {`${day}/${date.getMonth() + 1}/${year}`} ||| {item.category}
                 </div>
               </div>
             );
