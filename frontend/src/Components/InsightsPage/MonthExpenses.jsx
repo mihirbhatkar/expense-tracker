@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import MonthlyExpenses from "../Components/Charts/MonthlyExpenses";
-import { useSearchExpensesMutation } from "../Slices/expensesApiSlice";
-import Loader from "../Components/Loader";
-import CategoriesPie from "../Components/Charts/CategoriesPie";
-import { categories } from "../Data/categoriesData";
+import YearlyExpenseChart from "../Charts/YearlyExpenseChart";
+import { useSearchExpensesMutation } from "../../Slices/expensesApiSlice";
+import { useEffect, useState } from "react";
+import { categories } from "../../Data/categoriesData";
+import Loader from "../Loader";
+import CategoriesPie from "../Charts/CategoriesPie";
+import TimeModal from "../ExpensePage/TimeModal";
+import WalletModal from "../ExpensePage/WalletModal";
 
-const ReportsPage = () => {
+const YearlyExpenses = () => {
   const getDates = (startingDate) => {
     const currentDate = new Date();
     let targetMonth = currentDate.getMonth() - startingDate;
@@ -34,17 +36,16 @@ const ReportsPage = () => {
   };
   const { wallets } = useSelector((state) => state.wallets);
   const [searchExpenses, { isLoading }] = useSearchExpensesMutation();
-
-  const [expenses, setExpenses] = useState(null);
-
+  const [expenses, setExpenses] = useState([]);
   const categoriesList = Object.keys(categories);
+  const [walletList, setWalletList] = useState(wallets);
 
   useEffect(() => {
     const getExp = async () => {
       const res = await searchExpenses({
         time: getDates(11),
         categories: categoriesList,
-        wallets: wallets,
+        wallets: walletList,
         amount: {
           lower: 0,
           upper: 100000,
@@ -53,20 +54,22 @@ const ReportsPage = () => {
       setExpenses(res);
     };
     getExp();
-  }, [wallets]);
+  }, [walletList]);
 
-  return (
-    expenses && (
-      <div className="lg:grid lg:grid-cols-2 flex flex-col items-center p-8 gap-4  ">
-        <div className="bg-base-200 w-96">
-          <MonthlyExpenses expenses={expenses} />{" "}
-        </div>
-
-        <div className="bg-base-200 w-96">
-          <CategoriesPie expenses={expenses} />
-        </div>
+  return expenses.length === 0 ? (
+    <Loader />
+  ) : (
+    <>
+      <div className="flex flex-col sm:flex-row">
+        <YearlyExpenseChart expenses={expenses} />
+        <CategoriesPie expenses={expenses} />
       </div>
-    )
+      <WalletModal
+        setWalletList={setWalletList}
+        walletList={walletList}
+        wallets={wallets}
+      />
+    </>
   );
 };
-export default ReportsPage;
+export default YearlyExpenses;

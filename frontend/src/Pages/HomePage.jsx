@@ -1,13 +1,7 @@
 import { useSelector } from "react-redux";
-import AddExpense from "../Components/AddExpense.jsx";
 import RecentExpenses from "../Components/RecentExpenses.jsx";
 import Score from "../Components/Score.jsx";
 import { Link } from "react-router-dom";
-import MonthlyExpenses from "../Components/Charts/MonthlyExpenses.jsx";
-import { useState, useEffect } from "react";
-import { categories } from "../Data/categoriesData";
-import { useSearchExpensesMutation } from "../Slices/expensesApiSlice.js";
-import Loader from "../Components/Loader.jsx";
 import IndividualMonthExpense from "../Components/Charts/IndividualMonthExpense.jsx";
 
 const HomePage = () => {
@@ -28,8 +22,8 @@ const HomePage = () => {
           <div className="bg-base-300 rounded-xl p-4">
             <div className="mb-4 flex justify-between">
               <div className="font-bold ">This month's expenses</div>
-              <Link to="/reports" className="text-sm underline ">
-                See all reports
+              <Link to="/insights" className="text-sm underline ">
+                See all insights
               </Link>
             </div>
             <IndividualMonthExpense

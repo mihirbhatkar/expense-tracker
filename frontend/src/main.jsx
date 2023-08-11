@@ -19,7 +19,7 @@ import RegisterPage from "./Pages/RegisterPage.jsx";
 import ProfilePage from "./Pages/ProfilePage.jsx";
 import WalletsPage from "./Pages/WalletsPage.jsx";
 import ExpensePage from "./Pages/ExpensePage.jsx";
-import ReportsPage from "./Pages/ReportsPage.jsx";
+import InsightsPage from "./Pages/InsightsPage.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,7 +32,7 @@ const router = createBrowserRouter(
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/wallets" element={<WalletsPage />} />
         <Route path="/expenses" element={<ExpensePage />} />
-        <Route path="/reports" element={<ReportsPage />} />
+        <Route path="/insights" element={<InsightsPage />} />
       </Route>
     </Route>
   )

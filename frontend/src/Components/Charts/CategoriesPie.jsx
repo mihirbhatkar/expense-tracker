@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
+import { categories } from "../../Data/categoriesData";
 
 const CategoriesPie = ({ expenses }) => {
-  const maxMonth = new Date(expenses[0].dateOfExpense).getMonth();
-  const categoriesList = ["Transportation", "Food"];
+  const categoriesList = Object.keys(categories);
 
   const categoryExpenseData = {};
   for (let i = 0; i < categoriesList.length; i++)
@@ -23,8 +22,6 @@ const CategoriesPie = ({ expenses }) => {
       },
     ],
   };
-
-  const [chartData, setChartData] = useState(data);
 
   return (
     <div>

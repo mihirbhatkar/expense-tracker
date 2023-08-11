@@ -39,6 +39,12 @@ const TimeModal = ({ setDateRange, getDates, dateRange }) => {
             >
               Last 6 months
             </button>
+            <button
+              className={`btn ${dateRange.type === 11 && "btn-neutral"}`}
+              onClick={() => setDateRange(getDates(11))}
+            >
+              This year
+            </button>
 
             {/* CREATING A MODAL FOR CUSTOM DATES */}
             <button

@@ -102,7 +102,7 @@ function App() {
               <Link to={"/wallets"}>Wallets</Link>
             </li>
             <li>
-              <Link to={"/reports"}>Reports</Link>
+              <Link to={"/insights"}>Insights</Link>
             </li>
             <li>
               <Link to={"/profile"}>Profile</Link>

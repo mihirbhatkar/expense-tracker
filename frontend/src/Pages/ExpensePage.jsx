@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import { categories as data } from "../Data/categoriesData";
 import Loader from "../Components/Loader";
 import { useSelector } from "react-redux";
 import TimeModal from "../Components/ExpensePage/TimeModal";
@@ -48,7 +49,7 @@ const ExpensePage = () => {
   }
   const [walletList, setWalletList] = useState(wallets);
 
-  const categoriesList = ["Transportation", "Food"];
+  const categoriesList = Object.keys(data);
   const [categories, setCategories] = useState(categoriesList);
 
   const [dateRange, setDateRange] = useState(getDates(0));

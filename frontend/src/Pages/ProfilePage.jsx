@@ -35,7 +35,7 @@ const ProfilePage = () => {
 
   return (
     <div className="flex justify-center items-center flex-col min-h-[var(--min-page-height)] font-bold">
-      <div className=" max-w-xs w-3/4 border rounded-xl p-4">
+      <div className=" max-w-xs w-3/4  p-4">
         <h1 className="text-4xl mb-8">Change credentials.</h1>
         <form
           action=""
