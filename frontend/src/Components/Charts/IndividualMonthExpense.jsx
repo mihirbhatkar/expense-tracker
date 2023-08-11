@@ -32,6 +32,7 @@ const IndividualMonthExpense = ({ year, month }) => {
     };
   }
   const categoriesList = Object.keys(categories);
+
   useEffect(() => {
     const getExp = async () => {
       const expenses = await searchExpenses({
@@ -72,11 +73,7 @@ const IndividualMonthExpense = ({ year, month }) => {
       </div>
     );
   } else {
-    return (
-      <div>
-        <Line data={chartData} />
-      </div>
-    );
+    return <Line data={chartData} />;
   }
 };
 export default IndividualMonthExpense;

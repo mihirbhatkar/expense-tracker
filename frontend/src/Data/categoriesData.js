@@ -10,6 +10,18 @@ const categories = {
   Investment: "🏦",
 };
 
+const colors = [
+  "#FF9999",
+  "#FFB366",
+  "#FFD966",
+  "#A3D977",
+  "#66CCCC",
+  "#6699CC",
+  "#CC99CC",
+  "#FF99CC",
+  "#FFCC99",
+];
+
 const monthNames = [
   "January",
   "February",
@@ -34,4 +46,4 @@ const dayNames = [
   "Friday",
   "Saturday",
 ];
-export { categories, monthNames, dayNames };
+export { categories, monthNames, dayNames, colors };
