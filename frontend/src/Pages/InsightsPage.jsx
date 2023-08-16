@@ -40,7 +40,6 @@ const InsightsPage = () => {
           <BiSolidChevronsRight />
         </button>
       </div>
-
       {carouselCounter == 0 && <MonthExpenses />}
       {carouselCounter == 1 && <CategoricalDistro />}
     </div>
