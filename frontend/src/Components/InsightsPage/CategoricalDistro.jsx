@@ -3,13 +3,12 @@ import { useSearchExpensesMutation } from "../../Slices/expensesApiSlice";
 import { useEffect, useState } from "react";
 import { categories } from "../../Data/categoriesData";
 import Loader from "../Loader";
-import CategoriesPie from "../Charts/CategoriesPie";
 import LineCategories from "../Charts/LineCategories";
+import { Line } from "react-chartjs-2";
+import { Chart as ChartJS } from "chart.js/auto";
+import IndividualMonthExpense from "../Charts/IndividualMonthExpense";
 
 const CategoricalDistro = () => {
-  const year = 2023;
-  const month = 8;
-
   function getDates(year, month) {
     const date = new Date(year, month, 1);
     date.setMonth(date.getMonth() + 1);
@@ -20,7 +19,12 @@ const CategoricalDistro = () => {
     };
   }
   const { wallets } = useSelector((state) => state.wallets);
-  const [searchExpenses, { isLoading }] = useSearchExpensesMutation();
+  const [searchExpenses] = useSearchExpensesMutation();
+
+  const [walletList, setWalletList] = useState(wallets);
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+
   const [expenses, setExpenses] = useState([]);
   const categoriesList = Object.keys(categories);
 
@@ -29,7 +33,7 @@ const CategoricalDistro = () => {
       const expenses = await searchExpenses({
         time: getDates(year, month - 1),
         categories: categoriesList,
-        wallets: wallets,
+        wallets: walletList,
         amount: {
           lower: 0,
           upper: 100000,
@@ -38,15 +42,26 @@ const CategoricalDistro = () => {
       setExpenses(expenses);
     };
     getExp();
-  }, [wallets]);
+  }, [walletList]);
 
   return expenses.length === 0 ? (
     <Loader />
   ) : (
-    <div className="flex flex-col gap-2 items-center sm:items-start sm:grid sm:grid-cols-[1fr_1fr] rounded-xl">
-      <CategoriesPie expenses={expenses} />
-      <LineCategories year={year} month={month} expenses={expenses} />
-    </div>
+    <>
+      <div className="flex flex-col gap-2 items-center sm:items-start sm:grid sm:grid-cols-[1fr_1fr] rounded-xl">
+        <div>
+          <IndividualMonthExpense
+            year={year}
+            month={month}
+            expenses={expenses}
+          />
+        </div>
+        <div>
+          <LineCategories year={year} month={month} expenses={expenses} />
+        </div>
+      </div>
+      <div></div>
+    </>
   );
 };
 export default CategoricalDistro;

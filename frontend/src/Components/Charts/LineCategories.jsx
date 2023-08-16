@@ -33,13 +33,11 @@ const LineCategories = ({ expenses, year, month }) => {
 
   expenses.map((item) => {
     const day = new Date(item.dateOfExpense).getDate();
-    console.log(categoryExpenses[item.category]);
     categoryExpenses[item.category][day] += item.amount;
   });
 
   const datasetsArray = [];
   for (let i = 0; i < categoriesList.length; i++) {
-    console.log(categoryExpenses[categoriesList[i]]);
     datasetsArray.push({
       label: `${categoriesList[i]}`,
       data: Object.values(categoryExpenses[categoriesList[i]]),
@@ -47,10 +45,10 @@ const LineCategories = ({ expenses, year, month }) => {
       borderColor: colors[i],
     });
   }
-  console.log(...datasetsArray);
+
   const data = {
     labels: Object.keys(dailyExpenses),
-    datasets: [...datasetsArray],
+    datasets: datasetsArray,
   };
   const options = {
     scales: {
@@ -67,10 +65,6 @@ const LineCategories = ({ expenses, year, month }) => {
     },
   };
 
-  return (
-    <div>
-      <Line data={data} options={options} />
-    </div>
-  );
+  return <Line data={data} options={options} />;
 };
 export default LineCategories;
