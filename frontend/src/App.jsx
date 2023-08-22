@@ -115,17 +115,16 @@ function App() {
       </div>
       {/* Put this part before </body> tag */}
       <input type="checkbox" id="transactionModal" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box">
+      <div className="modal ">
+        <div className="modal-box bg-slate-100">
           <AddExpense></AddExpense>
-          <div className="modal-action">
-            <label
-              htmlFor="transactionModal"
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-            >
-              ✕
-            </label>
-          </div>
+
+          <label
+            htmlFor="transactionModal"
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          >
+            ✕
+          </label>
         </div>
       </div>
 

@@ -7,6 +7,7 @@ import LineCategories from "../Charts/LineCategories";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 import IndividualMonthExpense from "../Charts/IndividualMonthExpense";
+import WalletModal from "../ExpensePage/WalletModal";
 
 const CategoricalDistro = () => {
   function getDates(year, month) {
@@ -24,6 +25,7 @@ const CategoricalDistro = () => {
   const [walletList, setWalletList] = useState(wallets);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [dateRange, setDateRange] = useState(getDates(year, month - 1));
 
   const [expenses, setExpenses] = useState([]);
   const categoriesList = Object.keys(categories);
@@ -31,7 +33,7 @@ const CategoricalDistro = () => {
   useEffect(() => {
     const getExp = async () => {
       const expenses = await searchExpenses({
-        time: getDates(year, month - 1),
+        time: dateRange,
         categories: categoriesList,
         wallets: walletList,
         amount: {
@@ -48,19 +50,25 @@ const CategoricalDistro = () => {
     <Loader />
   ) : (
     <>
-      <div className="flex flex-col gap-2 items-center sm:items-start sm:grid sm:grid-cols-[1fr_1fr] rounded-xl">
-        <div>
+      <div className="flex flex-col gap-2 items-center sm:items-start sm:grid sm:grid-cols-[1fr_1fr] sm:w-full rounded-xl">
+        <div className="w-full h-72">
           <IndividualMonthExpense
             year={year}
             month={month}
             expenses={expenses}
           />
         </div>
-        <div>
+        <div className="w-full h-72">
           <LineCategories year={year} month={month} expenses={expenses} />
         </div>
       </div>
-      <div></div>
+      <div className="flex gap-2">
+        <WalletModal
+          setWalletList={setWalletList}
+          walletList={walletList}
+          wallets={wallets}
+        />
+      </div>
     </>
   );
 };

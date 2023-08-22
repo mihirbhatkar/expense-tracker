@@ -93,8 +93,9 @@ const ExpensePage = () => {
 
   return (
     <>
-      <div className="flex flex-col p-8 gap-4 items-center">
-        <div className="flex gap-4">
+      <div className="flex flex-col p-4 gap-4 items-center">
+        <h1 className="text-3xl font-extrabold">Search Expenses.</h1>
+        <div className="grid grid-cols-2 gap-2 w-full">
           {/* TIME PERIOD MODAL */}
           <TimeModal
             getDates={getDates}
@@ -117,7 +118,8 @@ const ExpensePage = () => {
 
           {/* PRICES MODAL */}
           <PricesModal setPriceRange={setPriceRange} priceRange={priceRange} />
-
+        </div>
+        <div className="grid grid-cols-[3fr_1fr] w-full gap-2">
           {/* GENERAL SEARCH BUTTON */}
           <button onClick={searchResults} className="btn btn-primary">
             Search
@@ -127,8 +129,8 @@ const ExpensePage = () => {
           <SearchModal searchName={searchName} />
         </div>
 
-        <div className="flex flex-col text-center gap-2">
-          <h1 className="text-4xl font-bold"> Results </h1>
+        <div className="flex flex-col text-center p-4 gap-2 bg-base-200 rounded w-full">
+          <h1 className="text-2xl font-bold"> Results </h1>
           {isLoading ? (
             <Loader />
           ) : (
