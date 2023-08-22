@@ -144,6 +144,7 @@ const searchExpenses = asyncHandler(async (req, res) => {
   res.status(200).json(expenses);
 });
 
+// for searching expenses by name
 const searchExpensesByDescription = asyncHandler(async (req, res) => {
   const searchDescription = req.body.description;
 
@@ -168,6 +169,36 @@ const searchExpensesByDescription = asyncHandler(async (req, res) => {
   res.status(200).json(expenses);
 });
 
+// receives a wallet list and returns the oldest expense out of them
+const oldestExpenses = asyncHandler(async (req, res) => {
+  const { wallets } = req.body;
+  const walletIds = JSON.parse(wallets).map((wallet) => wallet._id);
+  const oldestExpensesList = [];
+
+  for (const walletId of walletIds) {
+    const oldestExpense = await Expenses.findOne({ walletId: walletId }).sort({
+      dateOfExpense: 1,
+    });
+
+    if (oldestExpense) {
+      oldestExpensesList.push(oldestExpense); // Push the oldest expense into the list
+    }
+  }
+  if (oldestExpensesList.length !== 0) {
+    let oldestDate = oldestExpensesList[0].dateOfExpense;
+
+    for (const expense of oldestExpensesList) {
+      if (expense.dateOfExpense < oldestDate) {
+        oldestDate = expense.dateOfExpense;
+      }
+    }
+
+    res.status(200).json(oldestDate);
+  } else {
+    res.status(200).json({ msg: "No expense found" });
+  }
+});
+
 export {
   addExpense,
   deleteExpense,
@@ -175,4 +206,5 @@ export {
   recentExpenses,
   searchExpenses,
   searchExpensesByDescription,
+  oldestExpenses,
 };

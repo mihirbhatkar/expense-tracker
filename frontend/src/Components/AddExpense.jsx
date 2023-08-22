@@ -39,13 +39,13 @@ const AddExpense = () => {
           toast.error(error?.data?.message || error.error);
         }
       }}
-      className="flex flex-col gap-4 justify-self-center p-4 bg-base-200 rounded-xl"
+      className="flex flex-col justify-self-center p-1 rounded-xl"
     >
       <h1 className="text-2xl font-extrabold ">Add expense.</h1>
       <select
         required
         name="category"
-        className="select select-bordered w-full max-w-xs font-semibold text-lg"
+        className="select select-bordered w-full font-semibold text-md mt-3 rounded"
       >
         <option disabled defaultChecked>
           Select a category
@@ -59,34 +59,40 @@ const AddExpense = () => {
           );
         })}
       </select>
-      <WalletSelector />
+      <div className="mt-3">
+        <WalletSelector />
+      </div>
+      <div className="grid grid-cols-2 mt-3 gap-1">
+        <div className="gap-1 flex flex-col">
+          <label htmlFor="amount" className="font-semibold">
+            Amount
+          </label>
+          <input
+            type="number"
+            name="amount"
+            min="0"
+            placeholder="enter amount"
+            id="username"
+            className="p-2 rounded border-2 h-full"
+            required
+          />
+        </div>
+        <div className="gap-1 flex flex-col">
+          <label htmlFor="date" className="font-semibold">
+            Date
+          </label>
+          <input
+            type="date"
+            name="date"
+            placeholder="enter date"
+            id="username"
+            required
+            className="p-2 rounded border-2"
+          />
+        </div>
+      </div>
 
-      <label htmlFor="amount" className="mt-[10px] font-semibold">
-        Amount
-      </label>
-      <input
-        type="number"
-        name="amount"
-        min="0"
-        placeholder="enter amount"
-        id="username"
-        className="input input-bordered "
-        required
-      />
-
-      <label htmlFor="date" className="mt-[10px] font-semibold">
-        Date
-      </label>
-      <input
-        type="date"
-        name="date"
-        placeholder="enter date"
-        id="username"
-        required
-        className="input input-bordered "
-      />
-
-      <label htmlFor="description" className="mt-[10px] font-semibold">
+      <label htmlFor="description" className="mt-3 mb-1 font-semibold">
         Description
       </label>
       <input
@@ -94,7 +100,7 @@ const AddExpense = () => {
         name="description"
         placeholder="enter description"
         id="description"
-        className="input input-bordered w-full"
+        className="p-2 rounded border-2"
         required
       />
       {isLoading ? (
@@ -102,8 +108,8 @@ const AddExpense = () => {
           <Loader />
         </button>
       ) : (
-        <button className="btn btn-accent mt-4 " type="submit">
-          Add!
+        <button className="btn btn-accent mt-4 font-extrabold" type="submit">
+          Add
         </button>
       )}
     </form>
