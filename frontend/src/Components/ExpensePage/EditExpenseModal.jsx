@@ -14,34 +14,34 @@ const EditExpenseModal = ({ item, wallet }) => {
   let modalColor = `bg-base-200`;
   switch (item.category) {
     case "Transportation":
-      modalColor = `bg-[#FF9999]`;
+      modalColor = `bg-gradient-to-b from-[#FF9999] to-[#FF9999]/60`;
       break;
     case "Food":
-      modalColor = `bg-[#FFB366]`;
+      modalColor = `bg-gradient-to-b from-[#FFB366] to-[#FFB366]/60`;
       break;
     case "Entertainment":
-      modalColor = `bg-[#FFD966]`;
+      modalColor = `bg-gradient-to-b from-[#FFD966] to-[#FFD966]/60`;
       break;
     case "Medical":
-      modalColor = `bg-[#A3D977]`;
+      modalColor = `bg-gradient-to-b from-[#A3D977] to-[#A3D977]/60`;
       break;
     case "Home Maintenance":
-      modalColor = `bg-[#66CCCC]`;
+      modalColor = `bg-gradient-to-b from-[#66CCCC] to-[#66CCCC]/60`;
       break;
     case "Vehicle Maintenance":
-      modalColor = `bg-[#6699CC]`;
+      modalColor = `bg-gradient-to-b from-[#6699CC] to-[#6699CC]/60`;
       break;
     case "Insurances":
-      modalColor = `bg-[#CC99CC]`;
+      modalColor = `bg-gradient-to-b from-[#CC99CC] to-[#CC99CC]/60`;
       break;
     case "Fitness":
-      modalColor = `bg-[#FF99CC]`;
+      modalColor = `bg-gradient-to-b from-[#FF99CC] to-[#FF99CC]/60`;
       break;
     case "Investment":
-      modalColor = `bg-[#FFCC99]`;
+      modalColor = `bg-gradient-to-b from-[#FFCC99] to-[#FFCC99]/60`;
       break;
     default:
-      modalColor = `bg-base-200`;
+      modalColor = `bg-gradient-to-b bg-base-200`;
   }
 
   return (
@@ -52,16 +52,17 @@ const EditExpenseModal = ({ item, wallet }) => {
       >
         <div
           key={item._id}
-          className="flex flex-col min-w-full items-center gap-4"
+          className="flex flex-col min-w-full items-center gap-4 "
         >
           <div className={`${modalColor} rounded w-full p-2`}>
-            <div className="grid grid-cols-[48px_auto] gap-2 p-2">
+            <div className="grid grid-cols-[48px_auto] items-center gap-4 p-2">
               <img
                 src={images[item.category]}
                 alt=""
-                className="w-12 h-12 mr-2 inline"
+                className="w-12 h-12 inline mr-2"
               />
-              <div className="flex justify-between h-full items-center">
+
+              {/* <div className="flex justify-between h-full items-center">
                 <span className="font-semibold text-lg text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
                   {item.category}
                 </span>
@@ -71,17 +72,22 @@ const EditExpenseModal = ({ item, wallet }) => {
                 >
                   -&#8377;{item.amount}
                 </span>
-              </div>
-            </div>
-            <hr className="border-[1px] opacity-5 rounded-xl border-solid border-black mt-2" />
-            <div className="grid grid-cols-[48px_auto] gap-2 bg-white p-2 rounded mt-2">
-              <div className="text-4xl h-full my-auto">{day}</div>
-              <div className="flex justify-between h-full items-center">
-                <div className="italic font-semibold text-sm sm:text-lg text-left">
-                  {weekday}, {month} {year} <br />
+              </div> */}
+
+              <div className="text-left flex justify-between items-center">
+                <div>
+                  <h1 className="text-xl font-bold">{item.description}</h1>
+                  <h2 className="font-semibold opacity-50">
+                    <div className="italic font-semibold text-sm sm:text-lg text-left">
+                      {day} {month}, {year} <br />
+                    </div>
+                  </h2>
                 </div>
-                <span className="font-bold max-w-[200px] sm:max-w-full sm:text-lg text-sm text-right">
-                  {item.description}
+                <span
+                  className="text-xl font-semibold text-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.1)]
+"
+                >
+                  &#8377;{item.amount}
                 </span>
               </div>
             </div>
@@ -101,7 +107,7 @@ const EditExpenseModal = ({ item, wallet }) => {
             className="
           flex flex-col w-full items-start gap-2 bg-white p-4 rounded-xl"
           >
-            <div className="grid grid-cols-[48px_auto] gap-4">
+            <div className="grid grid-cols-[48px_auto] items-center gap-4">
               <img
                 src={images[item.category]}
                 alt=""

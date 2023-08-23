@@ -1,20 +1,46 @@
+import { BiTimeFive } from "react-icons/bi";
+
 const TimeModal = ({ setDateRange, getDates, dateRange }) => {
   const currentDate = new Date();
   const day = String(currentDate.getDate()).padStart(2, "0");
   const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so we add 1
   const year = currentDate.getFullYear();
+  let btnLabel = "This month";
+  switch (dateRange.type) {
+    case 0:
+      btnLabel = "This month";
+      break;
+    case 1:
+      btnLabel = "Last month";
+      break;
+    case 2:
+      btnLabel = "Last 3 months";
+      break;
+    case 5:
+      btnLabel = "Last 6 months";
+      break;
+    case 11:
+      btnLabel = "This year";
+      break;
+  }
 
   return (
     <>
-      <button className="btn" onClick={() => window.timeModal.showModal()}>
-        TIME PERIOD
+      <button
+        className="flex justify-center items-center gap-1 p-2 rounded-xl border-teal-300 border-4 bg-teal-300/60 text-lg hover:bg-teal-300 transition-all"
+        onClick={() => window.timeModal.showModal()}
+      >
+        <BiTimeFive /> <span className="font-semibold">{btnLabel}</span>
       </button>
       <dialog id="timeModal" className="modal modal-bottom sm:modal-middle">
-        <form method="dialog" className="modal-box p-10">
+        <form method="dialog" className="modal-box">
           <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
             ✕
           </button>
-          <div className="flex flex-col gap-1">
+          <div className="mx-auto flex flex-col gap-1">
+            <h3 className="text-xl font-bold underline underline-offset-8 mb-4">
+              Select time period.
+            </h3>
             <button
               className={`btn ${dateRange.type === 0 && "btn-neutral"}`}
               onClick={() => setDateRange(getDates(0))}
@@ -51,7 +77,7 @@ const TimeModal = ({ setDateRange, getDates, dateRange }) => {
               className="btn"
               onClick={() => window.customTimeModal.showModal()}
             >
-              TIME PERIOD
+              Custom
             </button>
             <dialog
               id="customTimeModal"

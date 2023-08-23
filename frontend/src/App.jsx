@@ -103,6 +103,7 @@ function App() {
             <li>
               <Link to={"/insights"}>Insights</Link>
             </li>
+
             <li>
               <Link to={"/profile"}>Profile</Link>
             </li>

@@ -60,6 +60,7 @@ const ExpensePage = () => {
   });
 
   const [results, setResults] = useState([]);
+  const [resultHeading, setResultHeading] = useState("Most Recent Expenses...");
 
   const [getRecentExpenses, { isLoading }] = useGetRecentExpensesMutation();
   const [searchExpenses] = useSearchExpensesMutation();
@@ -89,13 +90,14 @@ const ExpensePage = () => {
       amount: priceRange,
     }).unwrap();
     setResults(res);
+    setResultHeading("Results");
   };
 
   return (
     <>
       <div className="flex flex-col p-4 gap-4 items-center">
         <h1 className="text-3xl font-extrabold">Search Expenses.</h1>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full max-w-5xl">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full max-w-3xl">
           {/* TIME PERIOD MODAL */}
           <TimeModal
             getDates={getDates}
@@ -105,6 +107,7 @@ const ExpensePage = () => {
 
           {/* CATEGORIES MODAL */}
           <CategoriesModal
+            categories={categories}
             setCategories={setCategories}
             categoriesList={categoriesList}
           />
@@ -129,10 +132,19 @@ const ExpensePage = () => {
           <SearchModal searchName={searchName} />
         </div>
 
-        <div className="flex flex-col text-center py-4 gap-2 rounded w-full max-w-5xl">
-          <h1 className="text-2xl font-bold"> Results </h1>
+        <div className="flex flex-col text-center py-4 gap-2 rounded w-full max-w-2xl">
+          <hr className="max-w-xs w-full border-1 border-black rounded-xl self-center" />
+
+          <h1 className="text-3xl font-bold mb-2 mt-2"> {resultHeading}</h1>
           {isLoading ? (
             <Loader />
+          ) : results.length === 0 ? (
+            <div className="flex flex-col items-center gap-4">
+              <img src="./images/fail.png" alt="" className="w-32 h-32" />
+              <span className="font-semibold opacity-50">
+                No expenses match your search
+              </span>
+            </div>
           ) : (
             results.map((item) => {
               return (
