@@ -10,17 +10,29 @@ const categories = {
   Investment: "🏦",
 };
 
-const colors = [
-  "#FF9999",
-  "#FFB366",
-  "#FFD966",
-  "#A3D977",
-  "#66CCCC",
-  "#6699CC",
-  "#CC99CC",
-  "#FF99CC",
-  "#FFCC99",
-];
+const colors = {
+  Transportation: "#FF9999",
+  Food: "#FFB366",
+  Entertainment: "#FFD966",
+  Medical: "#A3D977",
+  "Home Maintenance": "#66CCCC",
+  "Vehicle Maintenance": "#6699CC",
+  Insurances: "#CC99CC",
+  Fitness: "#FF99CC",
+  Investment: "#FFCC99",
+};
+
+const images = {
+  Transportation: "./images/car.png",
+  Food: "./images/fast-food.png",
+  Entertainment: "./images/movies.png",
+  Medical: "./images/healthcare.png",
+  "Home Maintenance": "./images/house.png",
+  "Vehicle Maintenance": "./images/car-maintenance.png",
+  Insurances: "./images/money.png",
+  Fitness: "./images/fitness.png",
+  Investment: "./images/bank.png",
+};
 
 const monthNames = [
   "January",
@@ -46,4 +58,4 @@ const dayNames = [
   "Friday",
   "Saturday",
 ];
-export { categories, monthNames, dayNames, colors };
+export { categories, monthNames, dayNames, colors, images };

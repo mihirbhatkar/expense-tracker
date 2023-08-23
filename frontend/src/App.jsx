@@ -7,7 +7,6 @@ import Navbar from "./Components/Navbar.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "./Slices/usersApiSlice.js";
 import { clearCredentials } from "./Slices/authSlices.js";
-import { AiFillSetting } from "react-icons/ai";
 import { clearWalletsData } from "./Slices/walletsSlice.js";
 import AddExpense from "./Components/AddExpense.jsx";
 
@@ -104,6 +103,7 @@ function App() {
             <li>
               <Link to={"/insights"}>Insights</Link>
             </li>
+
             <li>
               <Link to={"/profile"}>Profile</Link>
             </li>
