@@ -42,7 +42,7 @@ const LineCategories = ({ expenses, year, month }) => {
       label: `${categoriesList[i]}`,
       data: Object.values(categoryExpenses[categoriesList[i]]),
       borderWidth: 2,
-      borderColor: colors[i],
+      borderColor: colors[categoriesList[i]],
     });
   }
 

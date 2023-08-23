@@ -1,10 +1,5 @@
-import { categories, monthNames } from "../../Data/categoriesData";
-import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
-import { useSearchExpensesMutation } from "../../Slices/expensesApiSlice";
-import { useSelector } from "react-redux";
-import Loader from "../Loader";
 
 const IndividualMonthExpense = ({ expenses, year, month }) => {
   let maxDate = "";
