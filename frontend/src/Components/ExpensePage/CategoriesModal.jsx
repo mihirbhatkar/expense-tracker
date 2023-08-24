@@ -9,7 +9,10 @@ const CategoriesModal = ({ setCategories, categoriesList, categories }) => {
         className="flex justify-center items-center gap-1 rounded-xl font-semibold p-2 border-orange-300 border-4 bg-orange-300/60 text-lg hover:bg-orange-300 transition-all"
         onClick={() => window.categoriesModal.showModal()}
       >
-        <BiCategoryAlt /> {allCategories ? "All Categories" : categories[0]}
+        <BiCategoryAlt />{" "}
+        <span className="text-sm sm:text-lg">
+          {allCategories ? "Categories" : categories[0]}
+        </span>
       </button>
       <dialog
         id="categoriesModal"

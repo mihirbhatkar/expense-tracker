@@ -60,7 +60,7 @@ function App() {
                   </svg>
                 </label>
                 <Link className="text-3xl p-2 font-bold lg:hidden " to={"/"}>
-                  💵
+                  <img src="./images/dollar.png" className="w-12 h-12" alt="" />
                 </Link>
               </div>
               <div className="flex-none">
@@ -84,11 +84,12 @@ function App() {
         </div>
         <div className="drawer-side z-40">
           <label htmlFor="drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 h-full bg-base-200 space-y-2 text-base-content text-lg">
+          <ul className="menu p-4 w-64 sm:w-80 h-full bg-base-200 space-y-2 text-base-content text-lg">
             {/* Sidebar content here */}
             <li className="  mb-4">
               <Link className="text-3xl p-2 font-bold" to={"/"}>
-                💵stackSense
+                <img src="./images/dollar.png" className="w-12 h-12" alt="" />
+                stackSense
               </Link>
             </li>
             <li>

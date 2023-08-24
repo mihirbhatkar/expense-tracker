@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import score from "./Calculation/score";
 
 const Score = ({ wallets }) => {
   const getCurrentBalance = () => {
@@ -19,28 +20,11 @@ const Score = ({ wallets }) => {
 
   const balance = getCurrentBalance();
   const total = getTotal();
-  const score = balance / total;
 
-  const calcMessage = () => {
-    let msg = "";
-    if (score >= 0.5) msg = "Your stackSense is great :)";
-    else if (score < 0.5) msg = "Your stackSense is terrible :(";
-    return msg;
-  };
-  const message = calcMessage();
-
-  let senseColor = "";
-  let senseWalletColor = "";
-  if (score >= 0.5) {
-    senseColor = "bg-emerald-500";
-    senseWalletColor = "bg-emerald-300";
-  } else {
-    senseColor = "bg-red-500";
-    senseWalletColor = "bg-red-300";
-  }
+  const { light, lighter, msg: message } = score(total, balance);
 
   return (
-    <div className={`collapse ${senseColor}`}>
+    <div className={`collapse ${light} shadow-md`}>
       <input type="checkbox" />
       <div className="collapse-title font-bold">
         <div className="flex justify-between">
@@ -51,10 +35,13 @@ const Score = ({ wallets }) => {
             alt=""
           />
         </div>
-        <div className="font-medium">{balance}</div>
+        <div className="font-[800] space-x-1">
+          <span>&#8377;{balance}</span> /
+          <span className="opacity-30">{total}</span>
+        </div>
       </div>
       <div
-        className={`collapse-content ${senseWalletColor} rounded-t-xl flex flex-col`}
+        className={`collapse-content ${lighter} rounded-t-xl flex flex-col gap-2 p-4`}
       >
         {wallets.map((item) => {
           return <Wallet key={item.walletName} item={item} />;
@@ -67,15 +54,25 @@ const Score = ({ wallets }) => {
 const Wallet = ({ item }) => {
   const { walletName, currentBalance, monthlyLimit } = item;
 
-  const individualWalletScore = currentBalance / monthlyLimit;
-
-  let walletColor = "";
-  if (individualWalletScore >= 0.5) walletColor = "bg-emerald-100";
-  else walletColor = "bg-red-100";
+  const { lightest, msg: message } = score(monthlyLimit, currentBalance);
 
   return (
-    <div className={`p-2 mt-2 ${walletColor} rounded-xl`}>
-      {walletName}, rs. {currentBalance} out of {monthlyLimit}
+    <div className={`w-full p-3 rounded-xl shadow ${lightest}`}>
+      <div className="flex items-center justify-between ">
+        <div className="text-sm sm:text-lg h-full flex items-center font-semibold">
+          <img
+            src={"./images/wallet.png"}
+            alt=""
+            className="w-6 h-6 mr-2 inline"
+          />
+          {walletName}
+        </div>
+
+        <div className="flex font-bold text-sm justify-between gap-2">
+          <span className="">&#8377;{currentBalance}</span>/
+          <span className="opacity-40">{monthlyLimit}</span>
+        </div>
+      </div>
     </div>
   );
 };

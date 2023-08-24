@@ -8,7 +8,9 @@ const WalletModal = ({ wallets, setWalletList, walletList }) => {
         onClick={() => window.walletModal.showModal()}
       >
         <AiOutlineWallet />{" "}
-        {walletList.length > 1 ? "All wallets" : walletList[0].walletName}
+        <span className="text-sm sm:text-lg">
+          {walletList.length > 1 ? "All wallets" : walletList[0].walletName}
+        </span>
       </button>
       <dialog id="walletModal" className="modal modal-bottom sm:modal-middle">
         <form method="dialog" className="modal-box p-10">

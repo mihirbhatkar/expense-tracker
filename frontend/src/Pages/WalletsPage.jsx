@@ -9,12 +9,15 @@ import {
   useUpdateWalletMutation,
   useGetAllWalletsMutation,
 } from "../Slices/walletsApiSlice";
+import score from "../Components/Calculation/score";
 
 const WalletsPage = () => {
   const { wallets, selectedWallet } = useSelector((state) => state.wallets);
 
   const [walletName, setWalletName] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [walletMonthlyLimit, setWalletMonthlyLimit] = useState(
+    selectedWallet.monthlyLimit
+  );
 
   const [createWallet, { isLoading }] = useCreateWalletMutation();
   const [updateWallet] = useUpdateWalletMutation();
@@ -25,12 +28,13 @@ const WalletsPage = () => {
 
   const changeSelectedWallet = (newWallet) => {
     setWalletName(newWallet.walletName);
+    setWalletMonthlyLimit(newWallet.monthlyLimit);
     dispatch(setSelectedWallet(newWallet));
   };
 
   return (
     <>
-      <div className=" flex flex-col lg:grid lg:grid-cols-2 gap-4 text-lg p-8">
+      <div className=" flex flex-col lg:grid lg:grid-cols-2 gap-4 p-4">
         <div className="flex flex-col gap-4">
           <span className="text-3xl font-bold">All wallets.</span>
 
@@ -39,20 +43,30 @@ const WalletsPage = () => {
               const dateString = item.updatedAt;
               const date = new Date(dateString);
 
+              const { stackScore, light, lighter, lightest } = score(
+                item.monthlyLimit,
+                item.currentBalance
+              );
+
               return (
-                <label htmlFor="my_modal_6" className="text-2xl font-semibold">
+                <label htmlFor="editWalletModal" key={item._id} className="">
                   <div
                     onClick={() => changeSelectedWallet(item)}
-                    key={item._id}
-                    className="flex h-20 btn flex-col bg-base-200 rounded-xl min-w-full items-center gap-4"
+                    className={`w-full p-4 rounded hover:bg-opacity-80 shadow-md cursor-pointer ${lighter}`}
                   >
-                    <div className="rounded-xl w-full p-4">
-                      <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between ">
+                      <div className="text-sm sm:text-lg h-full flex items-center font-semibold">
+                        <img
+                          src={"./images/wallet.png"}
+                          alt=""
+                          className="w-6 h-6 mr-2 inline"
+                        />
                         {item.walletName}
-                        <span className="text-xl font-semibold">
-                          Limit:&#8377;{item.monthlyLimit} , Balance: &#8377;
-                          {item.currentBalance}
-                        </span>
+                      </div>
+
+                      <div className="flex font-[800] justify-between gap-2">
+                        <span className="">&#8377;{item.currentBalance}</span>/
+                        <span className="opacity-40">{item.monthlyLimit}</span>
                       </div>
                     </div>
                   </div>
@@ -105,18 +119,20 @@ const WalletsPage = () => {
 
       {/* ! EDIT WALLET MODAL */}
 
-      <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+      <input type="checkbox" id="editWalletModal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box">
-          <div className="bg-base-200 rounded-xl p-4 font-semibold">
-            <span className="text-3xl font-bold">Edit Wallet</span>
+          <div className=" rounded-xl font-semibold">
+            <span className="text-xl font-bold">
+              Edit {selectedWallet.walletName}
+            </span>
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
                 try {
                   const res = await updateWallet({
                     walletName: e.target.walletName.value,
-                    addAmount: e.target.addAmount.value,
+                    monthlyLimit: e.target.changeLimit.value,
                     id: selectedWallet._id,
                   });
                   toast.success(res.data.message);
@@ -136,25 +152,34 @@ const WalletsPage = () => {
                 value={walletName}
                 onChange={(e) => setWalletName(e.target.value)}
                 placeholder="Type here"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full"
               />
-              <label htmlFor="addAmount">Add Amount</label>
+              <label htmlFor="changeLimit">Monthly Limit</label>
               <input
-                name="addAmount"
-                id="addAmount"
+                name="changeLimit"
+                id="changeLimit"
                 type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                min={0}
+                value={walletMonthlyLimit}
+                onChange={(e) => {
+                  const input = e.target.value;
+                  console.log(input === "");
+                  if (isNaN(input)) return;
+                  return setWalletMonthlyLimit(e.target.value);
+                }}
                 placeholder="Type here"
                 className="input input-bordered w-full max-w-xs"
               />
-              Other wallet info...
+              Last updated: {selectedWallet.updatedAt}
               <div className="space-x-2">
-                <button type="submit" className="btn btn-accent w-36 ">
-                  Add Amount
+                <button type="submit" className="btn btn-accent  ">
+                  Submit
                 </button>
-                <label htmlFor="my_modal_6" className="btn w-36 btn-neutral ">
-                  Close!
+                <label
+                  htmlFor="editWalletModal"
+                  className="btn btn-sm btn-circle btn-ghost absolute right-6 top-6"
+                >
+                  ✕
                 </label>
               </div>
             </form>

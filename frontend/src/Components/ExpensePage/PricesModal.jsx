@@ -9,7 +9,7 @@ const PricesModal = ({ setPriceRange, priceRange }) => {
         onClick={() => window.pricesModal.showModal()}
       >
         <LiaSortSolid />
-        Amount
+        <span className="text-sm sm:text-lg">Amount</span>
       </button>
       <dialog id="pricesModal" className="modal modal-bottom sm:modal-middle">
         <form
