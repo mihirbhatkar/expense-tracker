@@ -43,7 +43,7 @@ const EditExpenseModal = ({ item, wallet }) => {
                   </h2>
                 </div>
                 <span
-                  className="text-xl font-semibold text-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.1)]
+                  className="text-base sm:text-xl font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.1)]
 "
                 >
                   &#8377;{item.amount}
@@ -64,7 +64,7 @@ const EditExpenseModal = ({ item, wallet }) => {
 
           <div
             className="
-          flex flex-col w-full items-start gap-2 bg-white p-4 rounded-xl"
+          flex flex-col w-full items-start gap-2 bg-base-200/50 p-4 rounded-xl"
           >
             <div className="grid grid-cols-[48px_auto] items-center gap-4">
               <img
@@ -77,7 +77,7 @@ const EditExpenseModal = ({ item, wallet }) => {
                 <h2 className="font-semibold opacity-50">{item.category}</h2>
               </div>
             </div>
-            <hr className="border-2 border-black rounded-xl w-full" />
+            <hr className="border-2 rounded-xl w-full" />
             <div>
               <span className="font-semibold">
                 Amount:{" "}

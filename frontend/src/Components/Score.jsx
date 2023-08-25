@@ -27,7 +27,7 @@ const Score = ({ wallets }) => {
     <div className={`collapse ${light} shadow-md`}>
       <input type="checkbox" />
       <div className="collapse-title font-bold">
-        <div className="flex justify-between">
+        <div className="flex justify-between text-xl font-extrabold">
           <span>{message}</span>
           <img
             src="./images/rotatingCoin.gif"
@@ -35,9 +35,9 @@ const Score = ({ wallets }) => {
             alt=""
           />
         </div>
-        <div className="font-[800] space-x-1">
+        <div className="font-[900] space-x-1">
           <span>&#8377;{balance}</span> /
-          <span className="opacity-30">{total}</span>
+          <span className="opacity-40">{total}</span>
         </div>
       </div>
       <div
@@ -59,7 +59,7 @@ const Wallet = ({ item }) => {
   return (
     <div className={`w-full p-3 rounded-xl shadow ${lightest}`}>
       <div className="flex items-center justify-between ">
-        <div className="text-sm sm:text-lg h-full flex items-center font-semibold">
+        <div className="text-sm sm:text-lg h-full flex items-center">
           <img
             src={"./images/wallet.png"}
             alt=""

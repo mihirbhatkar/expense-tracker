@@ -65,13 +65,12 @@ function App() {
               </div>
               <div className="flex-none">
                 <ul className="menu menu-horizontal px-1 space-x-4">
-                  {/* You can open the modal using ID.showModal() method */}
                   <ThemeSwitcher />
                   <label
                     htmlFor="transactionModal"
-                    className="btn bg-emerald-400"
+                    className="btn btn-accent font-bold"
                   >
-                    ADD TRANSACTION
+                    ADD
                   </label>
                 </ul>
               </div>

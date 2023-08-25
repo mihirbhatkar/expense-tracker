@@ -27,15 +27,15 @@ const RecentExpenses = () => {
   }, [wallets]);
 
   return (
-    <div className="p-4 bg-slate-900 shadow-md rounded-xl">
+    <div className="p-4 bg-base-200 shadow-md rounded-xl">
       <div className="mb-4 flex items-center justify-between">
-        <div className="font-bold text-xl text-white">Recent Expenses.</div>
+        <div className="font-extrabold text-xl ">Recent Expenses.</div>
         <Link to="/expenses" className="text-sm underline">
           See all
         </Link>
       </div>
 
-      <div className="flex flex-col gap-2 text-white">
+      <div className="flex flex-col gap-2">
         {isLoading ? (
           <Loader />
         ) : (
@@ -50,10 +50,13 @@ const RecentExpenses = () => {
             const bgColor = modalColor(item.category);
 
             return (
-              <div className={`collapse ${bgColor} rounded-xl`} key={item._id}>
+              <div
+                className={`collapse ${bgColor} rounded-xl shadow-sm`}
+                key={item._id}
+              >
                 <input type="checkbox" />
-                <div className="collapse-title font-medium flex justify-between items-center">
-                  <div className="h-full flex  items-center">
+                <div className="collapse-title font-medium flex justify-between gap-2 items-center">
+                  <div className="h-full flex items-center">
                     <img
                       src={images[item.category]}
                       alt=""
@@ -61,7 +64,9 @@ const RecentExpenses = () => {
                     />
                     {item.description}
                   </div>
-                  <span className="font-semibold">&#8377; {item.amount}</span>
+                  <span className="font-semibold relative mr-[-30px] tracking-wide">
+                    &#8377;{item.amount}
+                  </span>
                 </div>
                 <div className="collapse-content text-sm">
                   Wallet: {walletNames[`${item.walletId}`]} |||

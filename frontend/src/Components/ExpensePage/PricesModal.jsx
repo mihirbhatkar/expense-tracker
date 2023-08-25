@@ -5,7 +5,7 @@ const PricesModal = ({ setPriceRange, priceRange }) => {
   return (
     <>
       <button
-        className="flex justify-center items-center gap-1 rounded-xl font-semibold p-2 border-rose-300 border-4 bg-rose-300/60 text-lg hover:bg-rose-300 transition-all"
+        className="flex justify-center items-center gap-1 rounded-lg font-semibold p-2 border-rose-300 border-4 bg-rose-300/60 text-lg hover:bg-rose-300 transition-all"
         onClick={() => window.pricesModal.showModal()}
       >
         <LiaSortSolid />

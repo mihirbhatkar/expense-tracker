@@ -3,47 +3,14 @@ import RecentExpenses from "../Components/RecentExpenses.jsx";
 import Score from "../Components/Score.jsx";
 import { Link } from "react-router-dom";
 import IndividualMonthExpense from "../Components/Charts/IndividualMonthExpense.jsx";
-import { useEffect, useState } from "react";
-import { categories } from "../Data/categoriesData.js";
-import { useSearchExpensesMutation } from "../Slices/expensesApiSlice.js";
+import HomePageIME from "../Components/Charts/HomePageIME.jsx";
 
 const HomePage = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const { wallets } = useSelector((state) => state.wallets);
 
-  const [expenses, setExpenses] = useState([]);
-  const [searchExpenses] = useSearchExpensesMutation();
-  function getDates(year, month) {
-    const date = new Date(year, month, 1);
-    date.setMonth(date.getMonth() + 1);
-    date.setDate(date.getDate() - 1);
-    return {
-      start: new Date(year, month, 1),
-      end: date,
-    };
-  }
-
-  const year = new Date().getFullYear();
-  const month = new Date().getMonth() + 1;
-
-  useEffect(() => {
-    const getExp = async () => {
-      const expenses = await searchExpenses({
-        time: getDates(year, month - 1),
-        categories: Object.keys(categories),
-        wallets: wallets,
-        amount: {
-          lower: 0,
-          upper: 100000,
-        },
-      }).unwrap();
-      setExpenses(expenses);
-    };
-    getExp();
-  }, [wallets]);
-
   return userInfo ? (
-    <div className="p-4 lg:grid lg:grid-cols-2 lg:justify-self-center gap-4 flex flex-col ">
+    <div className="p-4 max-w-2xl mx-auto lg:max-w-full lg:grid lg:grid-cols-2 lg:justify-self-center gap-4 flex flex-col ">
       {wallets.length === 0 ? (
         <p>
           You have no wallets.{" "}
@@ -53,24 +20,20 @@ const HomePage = () => {
         <>
           <Score wallets={wallets} />
 
-          <div className="bg-base-300 rounded-xl p-4">
-            <div className="mb-4 flex justify-between">
-              <div className="font-bold ">This month's expenses</div>
-              <Link to="/insights" className="text-sm underline ">
-                See all insights
+          <div className="bg-base-200 rounded-xl p-1 shadow-md flex flex-col items-center">
+            <div className="flex w-full items-center justify-between p-3">
+              <div className="font-extrabold text-xl">Last 30 days' trend</div>
+              <Link to="/insights" className="text-sm underline">
+                All insights
               </Link>
             </div>
-            <IndividualMonthExpense
-              expenses={expenses}
-              year={new Date().getFullYear()}
-              month={new Date().getMonth() + 1}
-            />
+            <div className="w-[95%]">
+              <HomePageIME />
+            </div>
           </div>
           <RecentExpenses />
         </>
       )}
-
-      {/* <AddExpense /> */}
     </div>
   ) : (
     <div className="text-center flex justify-center items-center flex-col min-h-[var(--min-page-height)] text-4xl font-bold">
