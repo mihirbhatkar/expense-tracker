@@ -3,6 +3,9 @@ import { setSelectedWallet, setUserWallets } from "../Slices/walletsSlice";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "../Components/Loader";
+import { BsWallet2 } from "react-icons/bs";
+import { IoWalletSharp } from "react-icons/io5";
+
 import {
   useCreateWalletMutation,
   useDeleteWalletMutation,
@@ -25,7 +28,7 @@ const WalletsPage = () => {
   const [getAllWallets] = useGetAllWalletsMutation();
 
   const dispatch = useDispatch();
-
+  console.log(localStorage.getItem("theme"));
   const changeSelectedWallet = (newWallet) => {
     setWalletName(newWallet.walletName);
     setWalletMonthlyLimit(newWallet.monthlyLimit);
@@ -34,9 +37,19 @@ const WalletsPage = () => {
 
   return (
     <>
-      <div className=" flex flex-col lg:grid lg:grid-cols-2 gap-4 p-4">
+      <div className=" mx-auto max-w-xl gap-4 p-4">
         <div className="flex flex-col gap-4">
-          <span className="text-3xl font-bold">All wallets.</span>
+          <div className="flex items-center w-full justify-between">
+            <span className="text-3xl sm:text-4xl font-[1000] underline underline-offset-8">
+              All wallets.
+            </span>
+            <label
+              htmlFor="addWalletModal"
+              className="btn btn-neutral font-extrabold"
+            >
+              <BsWallet2 /> ADD
+            </label>
+          </div>
 
           {selectedWallet &&
             wallets.map((item) => {
@@ -52,7 +65,7 @@ const WalletsPage = () => {
                 <label htmlFor="editWalletModal" key={item._id} className="">
                   <div
                     onClick={() => changeSelectedWallet(item)}
-                    className={`w-full p-4 rounded hover:bg-opacity-80 shadow-md cursor-pointer ${lighter}`}
+                    className={`w-full p-4 rounded hover:bg-opacity-90 transition-colors shadow-md cursor-pointer ${lighter}`}
                   >
                     <div className="flex items-center justify-between ">
                       <div className="text-sm sm:text-lg h-full flex items-center font-semibold">
@@ -73,47 +86,6 @@ const WalletsPage = () => {
                 </label>
               );
             })}
-        </div>
-        <div className="bg-base-200 rounded-xl p-4 font-semibold">
-          <span className="text-3xl font-bold">Add Wallet</span>
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              try {
-                const res = await createWallet({
-                  walletName: e.target.walletName.value,
-                  monthlyLimit: e.target.monthlyLimit.value,
-                });
-                toast.success(res.data.message);
-
-                const wallets = await getAllWallets();
-                dispatch(setUserWallets(wallets.data));
-              } catch (error) {
-                toast.error(error?.data?.message || error.error);
-              }
-            }}
-            className="flex flex-col gap-2 mt-4"
-          >
-            <label htmlFor="walletName">Name</label>
-            <input
-              name="walletName"
-              id="walletName"
-              type="text"
-              placeholder="Type here"
-              className="input input-bordered w-full max-w-xs"
-            />
-            <label htmlFor="monthlyLimit">Monthly Limit</label>
-            <input
-              name="monthlyLimit"
-              id="monthlyLimit"
-              type="number"
-              placeholder="Type here"
-              className="input input-bordered w-full max-w-xs"
-            />
-            <button type="submit" className="btn btn-accent w-36 ">
-              Add!
-            </button>
-          </form>
         </div>
       </div>
 
@@ -177,13 +149,79 @@ const WalletsPage = () => {
                 </button>
                 <label
                   htmlFor="editWalletModal"
-                  className="btn btn-sm btn-circle btn-ghost absolute right-6 top-6"
+                  className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4"
                 >
                   ✕
                 </label>
               </div>
             </form>
           </div>
+        </div>
+      </div>
+
+      {/* ADD WALLET MODAL */}
+      <input type="checkbox" id="addWalletModal" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box max-w-sm">
+          <IoWalletSharp className="absolute right-6 top-0 transform rotate-[135deg] z-[-100] w-16 h-16 sm:w-24 sm:h-24" />
+          <label
+            htmlFor="addWalletModal"
+            className="btn btn-sm btn-circle  bg-white text-black absolute right-4 top-4"
+          >
+            ✕
+          </label>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              try {
+                const res = await createWallet({
+                  walletName: e.target.walletName.value,
+                  monthlyLimit: e.target.monthlyLimit.value,
+                });
+                toast.success(res.data.message);
+
+                const wallets = await getAllWallets();
+                dispatch(setUserWallets(wallets.data));
+              } catch (error) {
+                toast.error(error?.data?.message || error.error);
+              }
+            }}
+          >
+            <div className="flex flex-col gap-4">
+              <span className="text-2xl sm:text-3xl font-bold underline underline-offset-8">
+                Add a wallet.
+              </span>
+
+              <div className="flex flex-col gap-1">
+                <label htmlFor="walletName" className="font-bold">
+                  Name
+                </label>
+                <input
+                  name="walletName"
+                  id="walletName"
+                  type="text"
+                  placeholder="A name for your wallet!"
+                  className="input input-bordered"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="monthlyLimit" className="font-bold">
+                  Monthly Limit
+                </label>
+                <input
+                  name="monthlyLimit"
+                  id="monthlyLimit"
+                  type="number"
+                  placeholder="A monthly spending limit!"
+                  className="input input-bordered"
+                />
+              </div>
+
+              <button type="submit" className="btn btn-accent">
+                Add!
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </>

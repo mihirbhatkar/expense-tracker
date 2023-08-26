@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import RecentExpenses from "../Components/RecentExpenses.jsx";
 import Score from "../Components/Score.jsx";
 import { Link } from "react-router-dom";
-import IndividualMonthExpense from "../Components/Charts/IndividualMonthExpense.jsx";
 import HomePageIME from "../Components/Charts/HomePageIME.jsx";
 
 const HomePage = () => {
