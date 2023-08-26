@@ -139,9 +139,9 @@ function App() {
             <li>
               <Link to={"/insights"}>Insights</Link>
             </li>
-            {/* <li>
+            <li>
               <Link to={"/reports"}>Reports</Link>
-            </li> */}
+            </li>
 
             <li>
               <Link to={"/profile"}>Profile</Link>
