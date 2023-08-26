@@ -13,19 +13,21 @@ const ThemeSwitcher = () => {
     // Save the theme preference to localStorage when the theme changes
     localStorage.setItem("theme", newTheme);
   };
+
   // Apply the theme to the HTML tag whenever the theme state changes
   useEffect(() => {
     document.querySelector("html").setAttribute("data-theme", theme);
   }, [theme]);
+
   return (
-    <label className="swap swap-rotate">
+    <label className="swap swap-rotate btn btn-square">
       <input onClick={toggleTheme} type="checkbox" />
-      {/* <div className="swap-on">
+      <div className="swap-on">
         {theme === "dark" ? <BsFillMoonFill /> : <BsFillSunFill />}
       </div>
       <div className="swap-off">
         {theme === "light" ? <BsFillSunFill /> : <BsFillMoonFill />}
-      </div> */}
+      </div>
     </label>
   );
 };

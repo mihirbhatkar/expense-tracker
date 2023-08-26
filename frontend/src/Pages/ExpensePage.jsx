@@ -135,7 +135,10 @@ const ExpensePage = () => {
         <div className="flex flex-col text-center py-4 gap-2 rounded w-full max-w-2xl">
           <hr className="max-w-xs w-full border-1 border-black rounded-xl self-center" />
 
-          <h1 className="text-3xl font-bold mb-2 mt-2"> {resultHeading}</h1>
+          <h1 className="text-xl md:text-lg font-extrabold mb-2 mt-2">
+            {" "}
+            {resultHeading}
+          </h1>
           {isLoading ? (
             <Loader />
           ) : results.length === 0 ? (

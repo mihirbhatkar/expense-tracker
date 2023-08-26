@@ -5,11 +5,11 @@ const PricesModal = ({ setPriceRange, priceRange }) => {
   return (
     <>
       <button
-        className="flex justify-center items-center gap-1 rounded-xl font-semibold p-2 border-rose-300 border-4 bg-rose-300/60 text-lg hover:bg-rose-300 transition-all"
+        className="flex justify-center items-center gap-1 rounded-lg font-semibold p-2 py-3 bg-rose-300 text-lg hover:bg-rose-300/[85%] transition-all"
         onClick={() => window.pricesModal.showModal()}
       >
         <LiaSortSolid />
-        Amount
+        <span className="text-sm sm:text-lg">Amount</span>
       </button>
       <dialog id="pricesModal" className="modal modal-bottom sm:modal-middle">
         <form

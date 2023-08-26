@@ -27,22 +27,22 @@ const addWallet = asyncHandler(async (req, res) => {
   res.status(200).json({ newWallet, message: "Wallet saved successfully!" });
 });
 
-// receives wallet data => object { addAmount  }
+// receives wallet data => object { monthlyLimit }
 // route - PUT /api/wallets/update/:id
 // @access private
 const updateWallet = asyncHandler(async (req, res) => {
   const wallet = await Wallet.findOne({
     _id: req.params.id,
   });
+
   if (!wallet) {
     res.status(404);
     throw new Error("Wallet not found!");
   }
-  const addAmount = Number(req.body.addAmount);
+
+  const newLimit = Number(req.body.monthlyLimit);
   wallet.walletName = req.body.walletName || wallet.walletName;
-  wallet.monthlyLimit += addAmount;
-  wallet.currentBalance += addAmount;
-  wallet.addedAmount += addAmount;
+  wallet.monthlyLimit = newLimit;
 
   await wallet.save();
 

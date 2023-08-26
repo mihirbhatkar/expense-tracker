@@ -27,10 +27,11 @@ const TimeModal = ({ setDateRange, getDates, dateRange }) => {
   return (
     <>
       <button
-        className="flex justify-center items-center gap-1 p-2 rounded-xl border-teal-300 border-4 bg-teal-300/60 text-lg hover:bg-teal-300 transition-all"
+        className="flex justify-center items-center gap-1 p-2 py-3 rounded-lg bg-teal-300 text-lg hover:bg-teal-300/[85%] transition-all"
         onClick={() => window.timeModal.showModal()}
       >
-        <BiTimeFive /> <span className="font-semibold">{btnLabel}</span>
+        <BiTimeFive />{" "}
+        <span className="font-semibold text-sm sm:text-lg">{btnLabel}</span>
       </button>
       <dialog id="timeModal" className="modal modal-bottom sm:modal-middle">
         <form method="dialog" className="modal-box">

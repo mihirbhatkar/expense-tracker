@@ -9,6 +9,8 @@ import { useLogoutMutation } from "./Slices/usersApiSlice.js";
 import { clearCredentials } from "./Slices/authSlices.js";
 import { clearWalletsData } from "./Slices/walletsSlice.js";
 import AddExpense from "./Components/AddExpense.jsx";
+import { BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
+import { useEffect, useState } from "react";
 
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -27,6 +29,24 @@ function App() {
       console.log("error");
     }
   };
+
+  const [theme, setTheme] = useState(() => {
+    // Retrieve the theme preference from localStorage on component mount
+    return localStorage.getItem("theme") || "light";
+  });
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    // Save the theme preference to localStorage when the theme changes
+    localStorage.setItem("theme", newTheme);
+  };
+
+  // Apply the theme to the HTML tag whenever the theme state changes
+  useEffect(() => {
+    document.querySelector("html").setAttribute("data-theme", theme);
+  }, [theme]);
+
   return userInfo ? (
     <>
       <div className="drawer lg:drawer-open">
@@ -60,35 +80,51 @@ function App() {
                   </svg>
                 </label>
                 <Link className="text-3xl p-2 font-bold lg:hidden " to={"/"}>
-                  💵
+                  <img src="./images/dollar.png" className="w-12 h-12" alt="" />
                 </Link>
               </div>
               <div className="flex-none">
                 <ul className="menu menu-horizontal px-1 space-x-4">
-                  {/* You can open the modal using ID.showModal() method */}
-                  <ThemeSwitcher />
+                  {/* <ThemeSwitcher /> */}
+                  <label className="swap swap-rotate btn btn-square">
+                    <input onClick={toggleTheme} type="checkbox" />
+                    <div className="swap-on">
+                      {theme === "dark" ? (
+                        <BsFillMoonFill />
+                      ) : (
+                        <BsFillSunFill />
+                      )}
+                    </div>
+                    <div className="swap-off">
+                      {theme === "light" ? (
+                        <BsFillSunFill />
+                      ) : (
+                        <BsFillMoonFill />
+                      )}
+                    </div>
+                  </label>
                   <label
                     htmlFor="transactionModal"
-                    className="btn bg-emerald-400"
+                    className="btn btn-accent font-bold"
                   >
-                    ADD TRANSACTION
+                    ADD
                   </label>
                 </ul>
               </div>
             </div>
           </div>
 
-          <Outlet />
-
           {/* Page content here */}
+          <Outlet />
         </div>
         <div className="drawer-side z-40">
           <label htmlFor="drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 h-full bg-base-200 space-y-2 text-base-content text-lg">
+          <ul className="menu p-4 w-64 sm:w-80 h-full bg-base-200 space-y-2 text-base-content text-lg">
             {/* Sidebar content here */}
             <li className="  mb-4">
               <Link className="text-3xl p-2 font-bold" to={"/"}>
-                💵stackSense
+                <img src="./images/dollar.png" className="w-12 h-12" alt="" />
+                stackSense
               </Link>
             </li>
             <li>
@@ -103,6 +139,9 @@ function App() {
             <li>
               <Link to={"/insights"}>Insights</Link>
             </li>
+            {/* <li>
+              <Link to={"/reports"}>Reports</Link>
+            </li> */}
 
             <li>
               <Link to={"/profile"}>Profile</Link>

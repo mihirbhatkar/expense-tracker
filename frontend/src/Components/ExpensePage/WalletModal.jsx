@@ -4,11 +4,13 @@ const WalletModal = ({ wallets, setWalletList, walletList }) => {
   return (
     <>
       <button
-        className="flex justify-center items-center gap-1 rounded-xl font-semibold p-2 border-sky-300 border-4 bg-sky-300/60 text-lg hover:bg-sky-300 transition-all"
+        className="flex justify-center items-center gap-1 rounded-lg font-semibold p-2 py-3 hover:bg-sky-300/[85%] bg-sky-300 text-lg hover:bg-sky-300 transition-all"
         onClick={() => window.walletModal.showModal()}
       >
         <AiOutlineWallet />{" "}
-        {walletList.length > 1 ? "All wallets" : walletList[0].walletName}
+        <span className="text-sm sm:text-lg">
+          {walletList.length > 1 ? "All wallets" : walletList[0].walletName}
+        </span>
       </button>
       <dialog id="walletModal" className="modal modal-bottom sm:modal-middle">
         <form method="dialog" className="modal-box p-10">
