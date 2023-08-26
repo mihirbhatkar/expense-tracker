@@ -27,7 +27,7 @@ const TimeModal = ({ setDateRange, getDates, dateRange }) => {
   return (
     <>
       <button
-        className="flex justify-center items-center gap-1 p-2 rounded-lg border-teal-300 border-4 bg-teal-300/60 text-lg hover:bg-teal-300 transition-all"
+        className="flex justify-center items-center gap-1 p-2 py-3 rounded-lg bg-teal-300 text-lg hover:bg-teal-300/[85%] transition-all"
         onClick={() => window.timeModal.showModal()}
       >
         <BiTimeFive />{" "}

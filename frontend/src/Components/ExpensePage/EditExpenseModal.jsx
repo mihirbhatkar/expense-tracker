@@ -25,7 +25,7 @@ const EditExpenseModal = ({ item, wallet }) => {
           key={item._id}
           className="flex flex-col min-w-full items-center gap-4 "
         >
-          <div className={`${bgColor} rounded w-full p-2`}>
+          <div className={`${bgColor} rounded-lg w-full p-2`}>
             <div className="grid grid-cols-[48px_auto] items-center gap-4 p-2">
               <img
                 src={images[item.category]}

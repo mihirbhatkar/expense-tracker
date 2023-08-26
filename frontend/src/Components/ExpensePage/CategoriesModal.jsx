@@ -6,7 +6,7 @@ const CategoriesModal = ({ setCategories, categoriesList, categories }) => {
   return (
     <>
       <button
-        className="flex justify-center items-center gap-1 rounded-lg font-semibold p-2 border-orange-300 border-4 bg-orange-300/60 text-lg hover:bg-orange-300 transition-all"
+        className="flex justify-center items-center gap-1 rounded-lg font-semibold p-2 py-3 bg-orange-300 text-lg hover:bg-orange-300/[85%] transition-all"
         onClick={() => window.categoriesModal.showModal()}
       >
         <BiCategoryAlt />{" "}
