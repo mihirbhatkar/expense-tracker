@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import score from "./Calculation/score";
 
 const Score = ({ wallets }) => {
@@ -24,7 +22,7 @@ const Score = ({ wallets }) => {
   const { light, lighter, msg: message } = score(total, balance);
 
   return (
-    <div className={`collapse ${light} shadow-md`}>
+    <div className={`collapse ${light} shadow-md rounded`}>
       <input type="checkbox" />
       <div className="collapse-title font-bold">
         <div className="flex justify-between text-xl font-extrabold">
@@ -41,7 +39,7 @@ const Score = ({ wallets }) => {
         </div>
       </div>
       <div
-        className={`collapse-content ${lighter} rounded-t-xl flex flex-col gap-2 p-4`}
+        className={`collapse-content ${lighter}  rounded flex flex-col gap-2 p-4`}
       >
         {wallets.map((item) => {
           return <Wallet key={item.walletName} item={item} />;
@@ -57,7 +55,7 @@ const Wallet = ({ item }) => {
   const { lightest, msg: message } = score(monthlyLimit, currentBalance);
 
   return (
-    <div className={`w-full p-3 rounded-xl shadow ${lightest}`}>
+    <div className={`w-full p-2 rounded shadow ${lightest}`}>
       <div className="flex items-center justify-between ">
         <div className="text-sm sm:text-lg h-full flex items-center">
           <img

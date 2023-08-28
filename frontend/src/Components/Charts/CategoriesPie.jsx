@@ -1,6 +1,7 @@
-import { Pie } from "react-chartjs-2";
+import { Pie, Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
-import { categories } from "../../Data/categoriesData";
+import { categories, colors } from "../../Data/categoriesData";
+import { useEffect, useRef } from "react";
 
 const CategoriesPie = ({ expenses }) => {
   let catList = [];
@@ -17,21 +18,59 @@ const CategoriesPie = ({ expenses }) => {
   expenses.forEach((item) => {
     categoryExpenseData[item.category] += item.amount;
   });
-
+  const colorsArray = categoriesList.map((item) => colors[item]);
   const data = {
     labels: categoriesList,
     datasets: [
       {
         label: "Expense",
         data: Object.values(categoryExpenseData), // Array to hold monthly expense amounts
+        backgroundColor: colorsArray,
+        hoverOffset: 32,
+        borderColor: "black",
+        borderWidth: 1,
       },
     ],
   };
+  const options = {
+    maintainAspectRatio: false,
+
+    plugins: {
+      legend: {
+        display: true,
+        position: "bottom",
+        align: "start",
+        labels: {
+          boxWidth: 10,
+          boxHeight: 10,
+          padding: 5,
+        },
+      },
+    },
+  };
 
   return (
-    <div>
-      <Pie data={data} />
-    </div>
+    <>
+      <Doughnut height={300} options={options} data={data} />
+      {/* <canvas ref={pieRef} id="pie-chart" width="200" height="200"></canvas> */}
+      {/* <div id="legend" className="grid grid-cols-2">
+        {categoriesList.map((item) => {
+          return (
+            <div className="flex gap-2 items-center" key={item}>
+              <input
+                onChange={handleCheckboxChange}
+                defaultChecked
+                type="checkbox"
+                id={`${item}Checkbox`}
+                name={item}
+                value={item}
+              />
+              <label htmlFor={item}>{item}</label>
+            </div>
+          );
+        })}
+      </div> */}
+    </>
   );
 };
 export default CategoriesPie;

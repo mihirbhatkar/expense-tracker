@@ -85,29 +85,12 @@ function App() {
               </div>
               <div className="flex-none">
                 <ul className="menu menu-horizontal px-1 space-x-4">
-                  {/* <ThemeSwitcher /> */}
-                  <label className="swap swap-rotate btn btn-square">
-                    <input onClick={toggleTheme} type="checkbox" />
-                    <div className="swap-on">
-                      {theme === "dark" ? (
-                        <BsFillMoonFill />
-                      ) : (
-                        <BsFillSunFill />
-                      )}
-                    </div>
-                    <div className="swap-off">
-                      {theme === "light" ? (
-                        <BsFillSunFill />
-                      ) : (
-                        <BsFillMoonFill />
-                      )}
-                    </div>
-                  </label>
+                  <ThemeSwitcher />
                   <label
                     htmlFor="transactionModal"
                     className="btn btn-accent font-bold"
                   >
-                    ADD
+                    ADD EXPENSE
                   </label>
                 </ul>
               </div>
@@ -155,7 +138,7 @@ function App() {
       {/* Put this part before </body> tag */}
       <input type="checkbox" id="transactionModal" className="modal-toggle" />
       <div className="modal ">
-        <div className="modal-box bg-slate-100">
+        <div className="modal-box max-w-md">
           <AddExpense></AddExpense>
 
           <label

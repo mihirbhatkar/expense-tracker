@@ -172,7 +172,7 @@ const searchExpensesByDescription = asyncHandler(async (req, res) => {
 // receives a wallet list and returns the oldest expense out of them
 const oldestExpenses = asyncHandler(async (req, res) => {
   const { wallets } = req.body;
-  const walletIds = JSON.parse(wallets).map((wallet) => wallet._id);
+  const walletIds = wallets.map((wallet) => wallet._id);
   const oldestExpensesList = [];
 
   for (const walletId of walletIds) {

@@ -39,9 +39,11 @@ const AddExpense = () => {
           toast.error(error?.data?.message || error.error);
         }
       }}
-      className="flex flex-col justify-self-center p-1 rounded-xl"
+      className="flex flex-col gap-1 justify-self-center p-1 rounded-xl"
     >
-      <h1 className="text-2xl font-extrabold ">Add expense.</h1>
+      <h1 className="text-2xl font-extrabold underline underline-offset-8">
+        Add an expense.
+      </h1>
       <select
         required
         name="category"
@@ -91,18 +93,19 @@ const AddExpense = () => {
           />
         </div>
       </div>
-
-      <label htmlFor="description" className="mt-3 mb-1 font-semibold">
-        Description
-      </label>
-      <input
-        type="text"
-        name="description"
-        placeholder="enter description"
-        id="description"
-        className="p-2 rounded border-2"
-        required
-      />
+      <div className="flex flex-col ">
+        <label htmlFor="description" className="mt-3 mb-1 font-semibold">
+          Description
+        </label>
+        <input
+          type="text"
+          name="description"
+          placeholder="enter description"
+          id="description"
+          className="p-2 rounded border-2"
+          required
+        />
+      </div>
       {isLoading ? (
         <button className="btn btn-accent mt-4 " type="submit">
           <Loader />

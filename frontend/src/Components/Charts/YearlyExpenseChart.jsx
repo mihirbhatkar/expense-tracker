@@ -26,31 +26,49 @@ const YearlyExpenseChart = ({ expenses }) => {
         label: "Monthly Expense",
         data: Object.values(monthlyExpenses), // Array to hold monthly expense amounts
         borderWidth: 2,
-
         borderColor: "rgba(75,192,192,1)",
-        // tension: 0.4,
       },
     ],
   };
   const options = {
+    maintainAspectRatio: false,
     scales: {
       x: {
         border: {
-          width: 4,
+          width: 2,
+          color: "darkslategrey",
+        },
+        grid: {
+          color: "lightgrey",
+          width: 1,
         },
       },
       y: {
         border: {
-          width: 4,
+          width: 2,
+          color: "grey",
+        },
+        grid: {
+          color: "lightgrey",
+          width: 0.5,
         },
       },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      animations: false,
     },
   };
 
   return (
-    <div>
-      <Line options={options} data={data} />
-    </div>
+    <Line
+      width={window.innerWidth > 640 ? window.innerWidth / 2 : 200}
+      height={window.innerWidth > 640 ? 400 : 200}
+      options={options}
+      data={data}
+    />
   );
 };
 export default YearlyExpenseChart;

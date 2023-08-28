@@ -56,10 +56,19 @@ export const expensesApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    oldestExpense: builder.mutation({
+      query: (data) => ({
+        url: `${EXPENSES_URL}/find/oldest`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
 export const {
+  useOldestExpenseMutation,
   useSearchByNameMutation,
   useSearchExpensesMutation,
   useGetRecentExpensesMutation,

@@ -20,7 +20,7 @@ const ThemeSwitcher = () => {
   }, [theme]);
 
   return (
-    <label className="swap swap-rotate btn btn-square">
+    <label className="swap swap-rotate ">
       <input onClick={toggleTheme} type="checkbox" />
       <div className="swap-on">
         {theme === "dark" ? <BsFillMoonFill /> : <BsFillSunFill />}
