@@ -31,7 +31,7 @@ const YearlyExpenseChart = ({ expenses }) => {
     ],
   };
   const options = {
-    maintainAspectRatio: false,
+    // maintainAspectRatio: false,
     scales: {
       x: {
         border: {
@@ -64,8 +64,8 @@ const YearlyExpenseChart = ({ expenses }) => {
 
   return (
     <Line
-      width={window.innerWidth > 640 ? window.innerWidth / 2 : 200}
-      height={window.innerWidth > 640 ? 400 : 200}
+      // width={window.innerWidth > 640 ? 640 : 200}
+      // height={window.innerWidth > 640 ? 400 : 200}
       options={options}
       data={data}
     />

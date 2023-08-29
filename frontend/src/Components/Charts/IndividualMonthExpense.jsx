@@ -26,7 +26,13 @@ const IndividualMonthExpense = ({ expenses, year, month }) => {
       },
     ],
   };
-
-  return <Line data={data} />;
+  const options = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+  return <Line options={options} data={data} />;
 };
 export default IndividualMonthExpense;

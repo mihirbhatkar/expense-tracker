@@ -51,6 +51,18 @@ const LineCategories = ({ expenses, year, month }) => {
     datasets: datasetsArray,
   };
   const options = {
+    plugins: {
+      legend: {
+        display: false,
+        position: "bottom",
+        align: "start",
+        labels: {
+          boxWidth: 10,
+          boxHeight: 10,
+          padding: 5,
+        },
+      },
+    },
     scales: {
       x: {
         border: {

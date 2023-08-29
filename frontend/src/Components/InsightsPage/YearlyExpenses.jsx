@@ -63,18 +63,15 @@ const YearlyExpenses = () => {
           wallets={wallets}
         />
         <select
+          onChange={(e) => setYear(e.target.value)}
+          defaultValue={year}
           name="year-select"
           id="year-select"
           className="select select-bordered"
         >
           {yearsArray.map((item) => {
             return (
-              <option
-                defaultValue={item == year}
-                onClick={(e) => setYear(e.target.value)}
-                key={item}
-                value={item}
-              >
+              <option key={item} value={item}>
                 {item}
               </option>
             );
@@ -113,15 +110,15 @@ const YearlyExpenses = () => {
             {year}'s expenses
           </h2>
 
-          <div>
+          <div className="w-[99.9%]">
             <YearlyExpenseChart expenses={expenses} />
           </div>
         </div>
-        <div className="">
+        <div>
           <h2 className="underline underline-offset-2 mb-1">
             Category Distribution
           </h2>
-          <div>
+          <div className="w-[99.9%]">
             <CategoriesPie expenses={expenses} />
           </div>
         </div>

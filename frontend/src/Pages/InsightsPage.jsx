@@ -1,5 +1,5 @@
 import { BiSolidChevronsRight, BiSolidChevronsLeft } from "react-icons/bi";
-import MonthExpenses from "../Components/InsightsPage/MonthExpenses";
+import YearlyExpenses from "../Components/InsightsPage/YearlyExpenses";
 import CategoricalDistro from "../Components/InsightsPage/CategoricalDistro";
 import { useState } from "react";
 
@@ -8,11 +8,11 @@ const InsightsPage = () => {
   let carouselName = "";
   switch (carouselCounter) {
     case 0:
-      carouselName = "Yearly Expenses";
+      carouselName = "Yearly Insights";
       break;
 
     case 1:
-      carouselName = "Categorical Distribution";
+      carouselName = "Monthly Insights";
 
     default:
       break;
@@ -40,7 +40,7 @@ const InsightsPage = () => {
           <BiSolidChevronsRight />
         </button>
       </div>
-      {carouselCounter == 0 && <MonthExpenses />}
+      {carouselCounter == 0 && <YearlyExpenses />}
       {carouselCounter == 1 && <CategoricalDistro />}
     </div>
   );

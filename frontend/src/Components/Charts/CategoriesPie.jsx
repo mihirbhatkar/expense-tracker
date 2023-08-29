@@ -26,15 +26,17 @@ const CategoriesPie = ({ expenses }) => {
         label: "Expense",
         data: Object.values(categoryExpenseData), // Array to hold monthly expense amounts
         backgroundColor: colorsArray,
-        hoverOffset: 32,
+        hoverOffset: 24,
         borderColor: "black",
         borderWidth: 1,
       },
     ],
   };
   const options = {
-    maintainAspectRatio: false,
-
+    // maintainAspectRatio: false,
+    layout: {
+      padding: 30,
+    },
     plugins: {
       legend: {
         display: true,
@@ -51,7 +53,8 @@ const CategoriesPie = ({ expenses }) => {
 
   return (
     <>
-      <Doughnut height={300} options={options} data={data} />
+      {/* <Doughnut height={300} options={options} data={data} /> */}
+      <Doughnut options={options} data={data} />
       {/* <canvas ref={pieRef} id="pie-chart" width="200" height="200"></canvas> */}
       {/* <div id="legend" className="grid grid-cols-2">
         {categoriesList.map((item) => {
