@@ -13,13 +13,14 @@ const LineCategories = ({ expenses, year, month }) => {
   const categoriesList = catList;
 
   let maxDate = "";
-  if (month === new Date().getMonth() + 1) {
-    maxDate = new Date().getDate();
+  let currentDate = new Date();
+  if (month === currentDate.getMonth() + 1) {
+    maxDate = currentDate.getDate();
   } else {
     const date = new Date(year, month, 1);
     date.setMonth(date.getMonth() + 1);
     date.setDate(date.getDate() - 1);
-    maxDate = date;
+    maxDate = date.getDate();
   }
 
   const categoryExpenses = {}; // each category will have dailyExpense
