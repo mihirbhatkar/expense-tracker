@@ -31,9 +31,6 @@ UserSchema.pre("save", async function (next) {
 });
 
 UserSchema.methods.matchPasswords = async function (enteredPassword) {
-  // const salt = await bcrypt.genSalt(10);
-  // const enteredHashPassword = await bcrypt.hash(enteredPassword, salt);
-  // return enteredHashPassword === this.password;
   return await bcrypt.compare(enteredPassword, this.password);
 };
 

@@ -11,6 +11,7 @@ const addExpense = asyncHandler(async (req, res) => {
   const userWallet = await Wallet.findOne({ _id: req.params.id });
   if (user && userWallet) {
     const newExpense = new Expenses({
+      userId: req.user._id,
       walletId: userWallet._id,
       category: req.body.category,
       amount: req.body.amount,
@@ -32,7 +33,7 @@ const addExpense = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(404);
-    throw new Error("Wallet not found!");
+    throw new Error("user or wallet not found!");
   }
 });
 
@@ -88,15 +89,9 @@ const updateExpense = asyncHandler(async (req, res) => {
 // route - GET /api/expenses/recent
 // @access private
 const recentExpenses = asyncHandler(async (req, res) => {
-  const wallets = await Wallet.find({ userId: req.user._id });
-  let walletIds = [];
-  wallets.forEach((element, index) => {
-    walletIds.push(element._id);
-  });
-
-  const recentExpenses = await Expenses.find({ walletId: { $in: walletIds } })
+  const recentExpenses = await Expenses.find({ userId: req.user._id })
     .sort({ dateOfExpense: -1 }) // -1 for descending order, 1 for ascending order
-    .limit(3);
+    .limit(5);
 
   res.status(200).json({ recentExpenses, message: "Recent expenses returned" });
 });
@@ -148,19 +143,13 @@ const searchExpenses = asyncHandler(async (req, res) => {
 const searchExpensesByDescription = asyncHandler(async (req, res) => {
   const searchDescription = req.body.description;
 
-  const wallets = await Wallet.find({ userId: req.user._id });
-  let walletIds = [];
-  wallets.forEach((element, index) => {
-    walletIds.push(element._id);
-  });
-
   // Create a regular expression for case-insensitive search
   const searchRegex = new RegExp(searchDescription, "i");
 
   // Construct the query to find expenses with similar description
   const query = {
     description: searchRegex,
-    walletId: { $in: walletIds },
+    userId: req.user._id,
   };
 
   // Execute the query to find expenses with similar description and sort them by descending dateOfExpense

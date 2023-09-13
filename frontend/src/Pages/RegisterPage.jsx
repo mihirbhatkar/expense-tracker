@@ -5,6 +5,7 @@ import { useRegisterMutation } from "../Slices/usersApiSlice";
 import { setCredentials } from "../Slices/authSlices";
 import { toast } from "react-toastify";
 import Loader from "../Components/Loader";
+import { setUserWallets } from "../Slices/walletsSlice";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +34,7 @@ const RegisterPage = () => {
       try {
         const res = await register({ name, email, password }).unwrap(); // this returns a promise so we unwrap it
         dispatch(setCredentials({ ...res }));
+        dispatch(setUserWallets([]));
         navigate("/");
       } catch (error) {
         toast.error(error?.data?.message || error.error);

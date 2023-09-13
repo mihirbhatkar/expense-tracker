@@ -24,7 +24,7 @@ const AddExpense = () => {
           amount: e.target.amount.value,
           category: e.target.category.value,
           date: e.target.date.value,
-          description: e.target.description.value,
+          description: e.target.description.value || "",
         };
 
         try {
@@ -103,7 +103,6 @@ const AddExpense = () => {
           placeholder="enter description"
           id="description"
           className="p-2 rounded border-2"
-          required
         />
       </div>
       {isLoading ? (

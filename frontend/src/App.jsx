@@ -9,16 +9,15 @@ import { useLogoutMutation } from "./Slices/usersApiSlice.js";
 import { clearCredentials } from "./Slices/authSlices.js";
 import { clearWalletsData } from "./Slices/walletsSlice.js";
 import AddExpense from "./Components/AddExpense.jsx";
-import { BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
-import { useEffect, useState } from "react";
 
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
-  const [logout] = useLogoutMutation();
+  const { wallets } = useSelector((state) => state.wallets);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [logout] = useLogoutMutation();
   const logoutHandler = async () => {
     try {
       await logout().unwrap();
@@ -30,22 +29,7 @@ function App() {
     }
   };
 
-  const [theme, setTheme] = useState(() => {
-    // Retrieve the theme preference from localStorage on component mount
-    return localStorage.getItem("theme") || "light";
-  });
-
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    // Save the theme preference to localStorage when the theme changes
-    localStorage.setItem("theme", newTheme);
-  };
-
-  // Apply the theme to the HTML tag whenever the theme state changes
-  useEffect(() => {
-    document.querySelector("html").setAttribute("data-theme", theme);
-  }, [theme]);
+  console.log("i am App.jsx");
 
   return userInfo ? (
     <>
@@ -88,7 +72,9 @@ function App() {
                   <ThemeSwitcher />
                   <label
                     htmlFor="transactionModal"
-                    className="btn btn-accent font-bold"
+                    className={`btn btn-accent font-bold ${
+                      wallets.length === 0 && "hidden"
+                    } `}
                   >
                     ADD EXPENSE
                   </label>
@@ -122,9 +108,9 @@ function App() {
             <li>
               <Link to={"/insights"}>Insights</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to={"/reports"}>Reports</Link>
-            </li>
+            </li> */}
 
             <li>
               <Link to={"/profile"}>Profile</Link>

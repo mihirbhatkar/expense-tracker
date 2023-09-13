@@ -19,7 +19,7 @@ const WalletsPage = () => {
 
   const [walletName, setWalletName] = useState("");
   const [walletMonthlyLimit, setWalletMonthlyLimit] = useState(
-    selectedWallet.monthlyLimit
+    selectedWallet ? selectedWallet.monthlyLimit : 0
   );
 
   const [createWallet, { isLoading }] = useCreateWalletMutation();
@@ -28,13 +28,13 @@ const WalletsPage = () => {
   const [getAllWallets] = useGetAllWalletsMutation();
 
   const dispatch = useDispatch();
-  console.log(localStorage.getItem("theme"));
+
   const changeSelectedWallet = (newWallet) => {
     setWalletName(newWallet.walletName);
     setWalletMonthlyLimit(newWallet.monthlyLimit);
     dispatch(setSelectedWallet(newWallet));
   };
-
+  console.log("i am wallets page");
   return (
     <>
       <div className=" mx-auto max-w-xl gap-4 p-4">
@@ -51,7 +51,7 @@ const WalletsPage = () => {
             </label>
           </div>
 
-          {selectedWallet &&
+          {wallets.length !== 0 &&
             wallets.map((item) => {
               const dateString = item.updatedAt;
               const date = new Date(dateString);
@@ -86,78 +86,86 @@ const WalletsPage = () => {
                 </label>
               );
             })}
+          {wallets.length === 0 && <div>Add a wallet to get started!</div>}
         </div>
       </div>
 
       {/* ! EDIT WALLET MODAL */}
-
-      <input type="checkbox" id="editWalletModal" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box">
-          <div className=" rounded-xl font-semibold">
-            <span className="text-xl font-bold">
-              Edit {selectedWallet.walletName}
-            </span>
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-                try {
-                  const res = await updateWallet({
-                    walletName: e.target.walletName.value,
-                    monthlyLimit: e.target.changeLimit.value,
-                    id: selectedWallet._id,
-                  });
-                  toast.success(res.data.message);
-                  const wallets = await getAllWallets();
-                  dispatch(setUserWallets(wallets.data));
-                } catch (error) {
-                  toast.error(error?.data?.message || error.error);
-                }
-              }}
-              className="flex flex-col gap-2 mt-4"
-            >
-              <label htmlFor="walletName">Name</label>
-              <input
-                name="walletName"
-                id="walletName"
-                type="text"
-                value={walletName}
-                onChange={(e) => setWalletName(e.target.value)}
-                placeholder="Type here"
-                className="input input-bordered w-full"
-              />
-              <label htmlFor="changeLimit">Monthly Limit</label>
-              <input
-                name="changeLimit"
-                id="changeLimit"
-                type="number"
-                min={0}
-                value={walletMonthlyLimit}
-                onChange={(e) => {
-                  const input = e.target.value;
-                  console.log(input === "");
-                  if (isNaN(input)) return;
-                  return setWalletMonthlyLimit(e.target.value);
-                }}
-                placeholder="Type here"
-                className="input input-bordered w-full max-w-xs"
-              />
-              Last updated: {selectedWallet.updatedAt}
-              <div className="space-x-2">
-                <button type="submit" className="btn btn-accent  ">
-                  Submit
-                </button>
-                <label
-                  htmlFor="editWalletModal"
-                  className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4"
+      {selectedWallet && (
+        <>
+          <input
+            type="checkbox"
+            id="editWalletModal"
+            className="modal-toggle"
+          />
+          <div className="modal">
+            <div className="modal-box">
+              <div className=" rounded-xl font-semibold">
+                <span className="text-xl font-bold">
+                  Edit {selectedWallet.walletName}
+                </span>
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    try {
+                      const res = await updateWallet({
+                        walletName: e.target.walletName.value,
+                        monthlyLimit: e.target.changeLimit.value,
+                        id: selectedWallet._id,
+                      });
+                      toast.success(res.data.message);
+                      const wallets = await getAllWallets();
+                      dispatch(setUserWallets(wallets.data));
+                    } catch (error) {
+                      toast.error(error?.data?.message || error.error);
+                    }
+                  }}
+                  className="flex flex-col gap-2 mt-4"
                 >
-                  ✕
-                </label>
+                  <label htmlFor="walletName">Name</label>
+                  <input
+                    name="walletName"
+                    id="walletName"
+                    type="text"
+                    value={walletName}
+                    onChange={(e) => setWalletName(e.target.value)}
+                    placeholder="Type here"
+                    className="input input-bordered w-full"
+                  />
+                  <label htmlFor="changeLimit">Monthly Limit</label>
+                  <input
+                    name="changeLimit"
+                    id="changeLimit"
+                    type="number"
+                    min={0}
+                    value={walletMonthlyLimit}
+                    onChange={(e) => {
+                      const input = e.target.value;
+                      console.log(input === "");
+                      if (isNaN(input)) return;
+                      return setWalletMonthlyLimit(e.target.value);
+                    }}
+                    placeholder="Type here"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                  Last updated: {selectedWallet.updatedAt}
+                  <div className="space-x-2">
+                    <button type="submit" className="btn btn-accent  ">
+                      Submit
+                    </button>
+                    <label
+                      htmlFor="editWalletModal"
+                      className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4"
+                    >
+                      ✕
+                    </label>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
 
       {/* ADD WALLET MODAL */}
       <input type="checkbox" id="addWalletModal" className="modal-toggle" />

@@ -9,14 +9,23 @@ const HomePage = () => {
   const { wallets } = useSelector((state) => state.wallets);
 
   return userInfo ? (
-    <div className="p-4 max-w-2xl mx-auto lg:max-w-full lg:grid lg:grid-cols-2 lg:justify-self-center gap-4 flex flex-col ">
-      {wallets.length === 0 ? (
-        <p>
-          You have no wallets.{" "}
-          <Link to="/wallets">Add a wallet to get started!</Link>
+    wallets.length === 0 ? (
+      <div className="p-4 max-w-2xl mx-auto lg:max-w-full flex flex-col ">
+        <p className="self-center text-center text-xl space-y-4 mt-16">
+          <img
+            src="./images/no-results.png"
+            className="w-48 h-48 mx-auto mb-2"
+            alt=""
+          />
+          You have no wallets 😓 <br />
+          <Link className="btn btn-accent font-extrabold" to="/wallets">
+            Add a wallet to get started!
+          </Link>
         </p>
-      ) : (
-        <>
+      </div>
+    ) : (
+      <>
+        <div className="p-4 max-w-2xl mx-auto lg:max-w-full lg:grid lg:grid-cols-2 lg:justify-self-center gap-4 flex flex-col ">
           <Score wallets={wallets} />
 
           <div className="bg-base-200 rounded-xl p-1 shadow-md flex flex-col items-center">
@@ -31,9 +40,9 @@ const HomePage = () => {
             </div>
           </div>
           <RecentExpenses />
-        </>
-      )}
-    </div>
+        </div>
+      </>
+    )
   ) : (
     <div className="text-center flex justify-center items-center flex-col min-h-[var(--min-page-height)] text-4xl font-bold">
       <div className="mb-[var(--navbar-height)] lg:gap-16 flex lg:flex-row flex-col items-center justify-center">

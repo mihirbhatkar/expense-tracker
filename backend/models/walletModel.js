@@ -19,10 +19,6 @@ const WalletSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    addedAmount: {
-      type: Number,
-      default: 0,
-    },
   },
   {
     timestamps: true,
