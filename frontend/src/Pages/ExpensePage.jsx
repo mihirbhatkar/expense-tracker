@@ -92,7 +92,7 @@ const ExpensePage = () => {
     setResults(res);
     setResultHeading("Results");
   };
-
+  console.log('I am ExpensePage.jsx')
   return (
     <>
       <div className="flex flex-col p-4 gap-4 items-center">
