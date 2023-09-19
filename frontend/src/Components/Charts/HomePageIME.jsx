@@ -51,18 +51,18 @@ const HomePageIME = () => {
 		const minDateMonth = minDate.getMonth();
 		const maxDateMonth = maxDate.getMonth();
 		for (let i = minDate.getDate(); i <= nextMonth.getDate(); i++)
-			dailyExpenses[`${i}/${minDateMonth}`] = 0;
+			dailyExpenses[`${i}/${minDateMonth + 1}`] = 0;
 		for (let i = 1; i <= maxDate.getDate(); i++)
-			dailyExpenses[`${i}/${maxDateMonth}`] = 0;
+			dailyExpenses[`${i}/${maxDateMonth + 1}`] = 0;
 	} else {
 		for (let i = minDate.getDate(); i <= maxDate.getDate(); i++)
-			dailyExpenses[`${i}/${maxDate.getMonth()}`] = 0;
+			dailyExpenses[`${i}/${maxDate.getMonth() + 1}`] = 0;
 	}
 
 	expenses.map((expense) => {
 		const date = new Date(expense.dateOfExpense);
 		const day = date.getDate();
-		dailyExpenses[`${day}/${date.getMonth()}`] += expense.amount;
+		dailyExpenses[`${day}/${date.getMonth() + 1}`] += expense.amount;
 	});
 	const data = {
 		labels: Object.keys(dailyExpenses),
@@ -78,7 +78,24 @@ const HomePageIME = () => {
 		maintainAspectRatio: false,
 		elements: {
 			point: {
-				pointStyle: false,
+				radius: 2,
+			},
+
+			line: {
+				borderWidth: 1.5,
+			},
+		},
+		scales: {
+			x: {
+				// display: false,
+				grid: {
+					display: false,
+				},
+			},
+		},
+		plugins: {
+			legend: {
+				display: false,
 			},
 		},
 	};

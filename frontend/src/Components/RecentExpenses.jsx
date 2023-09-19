@@ -8,6 +8,8 @@ import modalColor from "./Calculation/modalColor";
 import { images } from "../Data/categoriesData";
 import { toast } from "react-toastify";
 
+import { GoDotFill } from "react-icons/go";
+
 const RecentExpenses = () => {
 	const { wallets } = useSelector((state) => state.wallets);
 
@@ -55,33 +57,49 @@ const RecentExpenses = () => {
 						const weekday = dayNames[date.getDay()];
 
 						const bgColor = modalColor(item.category);
-
 						return (
 							<div
-								className={`collapse ${bgColor} rounded-xl shadow-sm`}
 								key={item._id}
+								className="flex flex-col min-w-full items-center gap-4 "
 							>
-								<input type="checkbox" />
-								<div className="collapse-title font-medium flex justify-between gap-2 items-center">
-									<div className="h-full flex items-center">
+								<div className={`${bgColor} rounded-lg w-full`}>
+									<div className="grid grid-cols-[48px_auto] items-center gap-1 p-2">
 										<img
 											src={images[item.category]}
 											alt=""
-											className="w-8 h-8 mr-2 inline"
+											className="w-10 h-10 inline"
 										/>
-										{item.description}
+
+										<div className="text-left flex justify-between items-center">
+											<div>
+												<h1 className="sm:text-lg font-bold flex items-center gap-1">
+													{item.description}{" "}
+													<span className="inline">
+														<GoDotFill />
+													</span>
+													<span className="opacity-50 text-sm font-bold">
+														{
+															walletNames[
+																item.walletId
+															]
+														}
+													</span>
+												</h1>
+												<h2 className="font-semibold opacity-50">
+													<div className="italic font-semibold text-left">
+														{day} {month}, {year}{" "}
+														<br />
+													</div>
+												</h2>
+											</div>
+											<span
+												className=" font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.1)]
+"
+											>
+												&#8377;{item.amount}
+											</span>
+										</div>
 									</div>
-									<span className="font-semibold relative mr-[-30px] tracking-wide">
-										&#8377;{item.amount}
-									</span>
-								</div>
-								<div className="collapse-content text-sm">
-									Wallet: {walletNames[`${item.walletId}`]}{" "}
-									|||
-									{`${day}/${
-										date.getMonth() + 1
-									}/${year}`}{" "}
-									||| {item.category}
 								</div>
 							</div>
 						);

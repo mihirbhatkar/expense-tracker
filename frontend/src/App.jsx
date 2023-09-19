@@ -8,6 +8,7 @@ import { useLogoutMutation } from "./Slices/usersApiSlice.js";
 import { clearCredentials } from "./Slices/authSlices.js";
 import { clearWalletsData } from "./Slices/walletsSlice.js";
 import AddExpense from "./Components/AddExpense.jsx";
+import ThemeSwitcher from "./Components/ThemeSwitcher.jsx";
 
 function App() {
 	const { userInfo } = useSelector((state) => state.auth);
@@ -72,6 +73,7 @@ function App() {
 								</Link>
 							</div>
 							<div className="flex-none">
+								<ThemeSwitcher></ThemeSwitcher>
 								<ul className="menu menu-horizontal px-1 space-x-4">
 									<label
 										htmlFor="transactionModal"

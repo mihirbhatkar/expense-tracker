@@ -1,7 +1,6 @@
 import { Pie, Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
-import { categories, colors } from "../../Data/categoriesData";
-import { useEffect, useRef } from "react";
+import { colors } from "../../Data/categoriesData";
 
 const CategoriesPie = ({ expenses }) => {
 	let catList = [];

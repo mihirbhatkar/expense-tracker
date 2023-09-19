@@ -7,7 +7,6 @@ import HomePageIME from "../Components/Charts/HomePageIME.jsx";
 const HomePage = () => {
 	const { userInfo } = useSelector((state) => state.auth);
 	const { wallets } = useSelector((state) => state.wallets);
-
 	return userInfo ? (
 		wallets.length === 0 ? (
 			<div className="p-4 max-w-2xl mx-auto lg:max-w-full flex flex-col ">
@@ -38,7 +37,7 @@ const HomePage = () => {
 								All insights
 							</Link>
 						</div>
-						<div className="w-full">
+						<div className="w-[99%]">
 							<HomePageIME />
 						</div>
 					</div>
