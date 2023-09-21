@@ -6,78 +6,104 @@ import { categories, monthNames, dayNames } from "../Data/categoriesData";
 import { Link } from "react-router-dom";
 import modalColor from "./Calculation/modalColor";
 import { images } from "../Data/categoriesData";
+import { toast } from "react-toastify";
+
+import { GoDotFill } from "react-icons/go";
 
 const RecentExpenses = () => {
-  const { wallets } = useSelector((state) => state.wallets);
+	const { wallets } = useSelector((state) => state.wallets);
 
-  let walletNames = {};
-  for (let i = 0; i < wallets.length; i++) {
-    walletNames[`${wallets[i]._id}`] = wallets[i].walletName;
-  }
+	let walletNames = {};
+	for (let i = 0; i < wallets.length; i++) {
+		walletNames[`${wallets[i]._id}`] = wallets[i].walletName;
+	}
 
-  const [expenses, setExpenses] = useState([]);
-  const [getRecentExpenses, { isLoading }] = useGetRecentExpensesMutation();
+	const [expenses, setExpenses] = useState([]);
+	const [getRecentExpenses, { isLoading }] = useGetRecentExpensesMutation();
 
-  useEffect(() => {
-    const getExp = async () => {
-      const exp = await getRecentExpenses().unwrap();
-      setExpenses(exp.recentExpenses);
-    };
-    getExp();
-  }, [wallets]);
+	useEffect(() => {
+		const getExpenses = async () => {
+			try {
+				const exp = await getRecentExpenses().unwrap();
 
-  return (
-    <div className="p-4 bg-base-200 shadow-md rounded-xl">
-      <div className="mb-4 flex items-center justify-between">
-        <div className="font-extrabold text-xl ">Recent Expenses.</div>
-        <Link to="/expenses" className="text-sm underline">
-          See all
-        </Link>
-      </div>
+				setExpenses(exp.recentExpenses.slice(0, 3));
+			} catch (error) {
+				console.log(error);
+				toast.error(error);
+			}
+		};
+		getExpenses();
+	}, [wallets]);
 
-      <div className="flex flex-col gap-2">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          expenses.map((item) => {
-            const dateString = item.dateOfExpense;
-            const date = new Date(dateString);
-            const month = monthNames[date.getMonth()];
-            const year = date.getFullYear();
-            const day = date.getDate();
-            const weekday = dayNames[date.getDay()];
-
-            const bgColor = modalColor(item.category);
-
-            return (
-              <div
-                className={`collapse ${bgColor} rounded-xl shadow-sm`}
-                key={item._id}
-              >
-                <input type="checkbox" />
-                <div className="collapse-title font-medium flex justify-between gap-2 items-center">
-                  <div className="h-full flex items-center">
-                    <img
-                      src={images[item.category]}
-                      alt=""
-                      className="w-8 h-8 mr-2 inline"
-                    />
-                    {item.description}
-                  </div>
-                  <span className="font-semibold relative mr-[-30px] tracking-wide">
-                    &#8377;{item.amount}
-                  </span>
-                </div>
-                <div className="collapse-content text-sm">
-                  Wallet: {walletNames[`${item.walletId}`]} |||
-                  {`${day}/${date.getMonth() + 1}/${year}`} ||| {item.category}
-                </div>
-              </div>
-            );
-          })
-        )}
-      </div>
-    </div>
-  );
+	return (
+		<div className="p-4 bg-neutral shadow-md rounded-xl">
+			<div className="mb-4 text-neutral-content flex items-center justify-between">
+				<div className="font-extrabold text-xl ">Recent Expenses.</div>
+				<Link to="/expenses" className="text-sm underline">
+					See all
+				</Link>
+			</div>
+			<div className="flex flex-col gap-2">
+				{isLoading ? (
+					<Loader />
+				) : (
+					expenses.map((item) => {
+						const dateString = item.dateOfExpense;
+						const date = new Date(dateString);
+						const month = monthNames[date.getMonth()];
+						const year = date.getFullYear();
+						const day = date.getDate();
+						const weekday = dayNames[date.getDay()];
+						const bgColor = modalColor(item.category);
+						return (
+							<div
+								key={item._id}
+								className="flex flex-col min-w-full items-center gap-4 "
+							>
+								<div className={`${bgColor} rounded-lg w-full`}>
+									<div className="grid grid-cols-[48px_auto] items-center gap-1 p-2">
+										<img
+											src={images[item.category]}
+											alt=""
+											className="w-10 h-10 inline"
+										/>
+										<div className="text-left flex justify-between items-center">
+											<div>
+												<h1 className="sm:text-lg font-bold flex items-center gap-1">
+													{item.description}{" "}
+													<span className="inline">
+														<GoDotFill />
+													</span>
+													<span className="opacity-50 text-sm font-bold">
+														{
+															walletNames[
+																item.walletId
+															]
+														}
+													</span>
+												</h1>
+												<h2 className="font-semibold opacity-50">
+													<div className="italic font-semibold text-left">
+														{day} {month}, {year}{" "}
+														<br />
+													</div>
+												</h2>
+											</div>
+											<span
+												className=" font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.1)]
+				"
+											>
+												&#8377;{item.amount}
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						);
+					})
+				)}
+			</div>
+		</div>
+	);
 };
 export default RecentExpenses;
