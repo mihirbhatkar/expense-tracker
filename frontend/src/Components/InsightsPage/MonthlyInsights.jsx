@@ -140,6 +140,9 @@ const MonthlyInsights = () => {
 		<>
 			<div className="flex flex-col gap-2 items-center sm:items-start sm:grid sm:grid-cols-[5fr_2fr] sm:w-full rounded-xl">
 				<div className="flex flex-col gap-1">
+					<h2 className="text-xl font-bold  underline underline-offset-2 mb-1">
+						{monthNames[month]} expenses
+					</h2>
 					<select
 						name=""
 						id=""

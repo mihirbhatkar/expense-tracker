@@ -155,6 +155,7 @@ function App() {
 		<>
 			<Navbar />
 			<Outlet />
+			<ToastContainer autoClose={2000} />
 		</>
 	);
 }

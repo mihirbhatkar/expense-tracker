@@ -28,7 +28,7 @@ const HomePage = () => {
 		) : (
 			<>
 				<div className="p-4 max-w-2xl mx-auto lg:max-w-full lg:grid lg:grid-cols-[1fr_auto]  lg:justify-self-center gap-4 flex flex-col-reverse">
-					<div className="bg-base-200 rounded-xl p-1 shadow-md flex flex-col items-center">
+					<div className=" rounded-xl p-1 drop-shadow-md flex flex-col items-center">
 						<div className="flex w-full items-center justify-between p-3">
 							<div className="font-extrabold text-xl">
 								Last 30 days' trend
@@ -43,7 +43,7 @@ const HomePage = () => {
 					</div>
 					<Score wallets={wallets} />
 				</div>
-				<div className="p-4 max-w-2xl mx-auto lg:max-w-full lg:grid lg:grid-cols-2 lg:justify-self-center gap-4 flex flex-col ">
+				<div className="px-4 max-w-2xl mx-auto lg:max-w-full lg:grid lg:grid-cols-2 lg:justify-self-center gap-4 flex flex-col ">
 					<RecentExpenses />
 				</div>
 			</>

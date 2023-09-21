@@ -36,14 +36,13 @@ const RecentExpenses = () => {
 	}, [wallets]);
 
 	return (
-		<div className="p-4 bg-base-200 shadow-md rounded-xl">
-			<div className="mb-4 flex items-center justify-between">
+		<div className="p-4 bg-neutral shadow-md rounded-xl">
+			<div className="mb-4 text-neutral-content flex items-center justify-between">
 				<div className="font-extrabold text-xl ">Recent Expenses.</div>
 				<Link to="/expenses" className="text-sm underline">
 					See all
 				</Link>
 			</div>
-
 			<div className="flex flex-col gap-2">
 				{isLoading ? (
 					<Loader />
@@ -55,7 +54,6 @@ const RecentExpenses = () => {
 						const year = date.getFullYear();
 						const day = date.getDate();
 						const weekday = dayNames[date.getDay()];
-
 						const bgColor = modalColor(item.category);
 						return (
 							<div
@@ -69,7 +67,6 @@ const RecentExpenses = () => {
 											alt=""
 											className="w-10 h-10 inline"
 										/>
-
 										<div className="text-left flex justify-between items-center">
 											<div>
 												<h1 className="sm:text-lg font-bold flex items-center gap-1">
@@ -94,7 +91,7 @@ const RecentExpenses = () => {
 											</div>
 											<span
 												className=" font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.1)]
-"
+				"
 											>
 												&#8377;{item.amount}
 											</span>

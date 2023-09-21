@@ -1,6 +1,7 @@
 import { colors } from "../../Data/categoriesData";
-import { Line, Radar } from "react-chartjs-2";
+import { Bar, Line, Radar } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
+import { useRef } from "react";
 
 const LineCategories = ({ expenses, year, month }) => {
 	// * ONLY FOR A SINGLE MONTH
@@ -42,8 +43,8 @@ const LineCategories = ({ expenses, year, month }) => {
 		datasetsArray.push({
 			label: `${categoriesList[i]}`,
 			data: Object.values(categoryExpenses[categoriesList[i]]),
-			borderWidth: 2,
 			borderColor: colors[categoriesList[i]],
+			tension: 0.15,
 		});
 	}
 
@@ -52,16 +53,10 @@ const LineCategories = ({ expenses, year, month }) => {
 		datasets: datasetsArray,
 	};
 	const options = {
+		animation: false,
 		plugins: {
 			legend: {
 				display: false,
-				position: "bottom",
-				align: "start",
-				labels: {
-					boxWidth: 10,
-					boxHeight: 10,
-					padding: 5,
-				},
 			},
 		},
 		scales: {
@@ -76,8 +71,55 @@ const LineCategories = ({ expenses, year, month }) => {
 				},
 			},
 		},
-	};
+		elements: {
+			point: {
+				pointStyle: false,
+				radius: 2,
+			},
 
-	return <Line data={data} options={options} />;
+			line: {
+				borderWidth: 1.5,
+			},
+		},
+	};
+	const chartRef = useRef(null);
+
+	return (
+		<>
+			<Line ref={chartRef} data={data} options={options} />
+			<div className="flex flex-wrap gap-2">
+				{datasetsArray.map((item, index) => {
+					return (
+						<div
+							key={item.label}
+							className="flex items-center gap-1 "
+						>
+							<input
+								onChange={(e) => {
+									const index = e.target.value;
+									if (
+										chartRef.current.isDatasetVisible(index)
+									) {
+										chartRef.current.hide(index);
+									} else {
+										chartRef.current.show(index);
+									}
+								}}
+								type="checkbox"
+								className="checkbox checkbox-neutral checkbox-sm"
+								value={index}
+								name={item.label}
+								id={item.label}
+								defaultChecked
+							/>
+							<label className="label-text" htmlFor={item.label}>
+								{item.label}
+							</label>
+						</div>
+					);
+				})}
+			</div>
+		</>
+	);
 };
 export default LineCategories;
