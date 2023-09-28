@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider,
+	createBrowserRouter,
+	createRoutesFromElements,
+	Route,
+	RouterProvider,
 } from "react-router-dom";
 
 import store from "./store.js";
@@ -22,26 +22,26 @@ import ExpensePage from "./Pages/ExpensePage.jsx";
 import InsightsPage from "./Pages/InsightsPage.jsx";
 
 const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route index={true} path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      {/* these are the protected routes  */}
-      <Route path="" element={<PrivateRoute />}>
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/wallets" element={<WalletsPage />} />
-        <Route path="/expenses" element={<ExpensePage />} />
-        <Route path="/insights" element={<InsightsPage />} />
-      </Route>
-    </Route>
-  )
+	createRoutesFromElements(
+		<Route path="/" element={<App />}>
+			<Route index={true} path="/" element={<HomePage />} />
+			<Route path="/login" element={<LoginPage />} />
+			<Route path="/register" element={<RegisterPage />} />
+			{/* these are the protected routes  */}
+			<Route path="" element={<PrivateRoute />}>
+				<Route path="/profile" element={<ProfilePage />} />
+				<Route path="/wallets" element={<WalletsPage />} />
+				<Route path="/expenses" element={<ExpensePage />} />
+				<Route path="/insights" element={<InsightsPage />} />
+			</Route>
+		</Route>
+	)
 );
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    {/* <React.StrictMode> */}
-    <RouterProvider router={router} />
-    {/* </React.StrictMode> */}
-  </Provider>
+	<Provider store={store}>
+		<React.StrictMode>
+			<RouterProvider router={router} />
+		</React.StrictMode>
+	</Provider>
 );

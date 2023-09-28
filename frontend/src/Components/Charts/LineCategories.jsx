@@ -1,7 +1,7 @@
 import { colors } from "../../Data/categoriesData";
 import { Bar, Line, Radar } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const LineCategories = ({ expenses, year, month }) => {
 	// * ONLY FOR A SINGLE MONTH
@@ -53,7 +53,18 @@ const LineCategories = ({ expenses, year, month }) => {
 		datasets: datasetsArray,
 	};
 	const options = {
-		animation: false,
+		animation: {
+			onComplete: () => {
+				delayed: true;
+			},
+			delay: (context) => {
+				let delay = 0;
+				if (context.type === "data" && context.mode === "default") {
+					delay = context.dataIndex * 50;
+				}
+				return delay;
+			},
+		},
 		plugins: {
 			legend: {
 				display: false,
@@ -82,12 +93,32 @@ const LineCategories = ({ expenses, year, month }) => {
 			},
 		},
 	};
+
 	const chartRef = useRef(null);
+	// const config = {
+	// 	type: "line",
+	// 	data: data,
+	// 	options: options,
+	// };
+
+	// useEffect(() => {
+	// 	const ctx = document.getElementById("myChart").getContext("2d");
+	// 	const chart = new ChartJS(ctx, config);
+
+	// 	chartRef.current = chart;
+
+	// 	return () => {
+	// 		chart.destroy();
+	// 	};
+	// });
 
 	return (
 		<>
 			<Line ref={chartRef} data={data} options={options} />
-			<div className="flex flex-wrap gap-2">
+
+			{/* <canvas id="myChart"></canvas> */}
+
+			<div className="flex flex-wrap gap-2 pt-1">
 				{datasetsArray.map((item, index) => {
 					return (
 						<div
@@ -99,6 +130,7 @@ const LineCategories = ({ expenses, year, month }) => {
 									const index = e.target.value;
 									if (
 										chartRef.current.isDatasetVisible(index)
+										// chart.isDatasetVisible(index)
 									) {
 										chartRef.current.hide(index);
 									} else {
@@ -106,13 +138,16 @@ const LineCategories = ({ expenses, year, month }) => {
 									}
 								}}
 								type="checkbox"
-								className="checkbox checkbox-neutral checkbox-sm"
+								className="checkbox checkbox-neutral checkbox-xs sm:checkbox-sm"
 								value={index}
 								name={item.label}
 								id={item.label}
 								defaultChecked
 							/>
-							<label className="label-text" htmlFor={item.label}>
+							<label
+								className="sm:label-text label-text-alt label p-[0.5px]"
+								htmlFor={item.label}
+							>
 								{item.label}
 							</label>
 						</div>

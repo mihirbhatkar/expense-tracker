@@ -44,9 +44,7 @@ const InsightsPage = () => {
 
 	useEffect(() => {
 		document.title = "Insights";
-
 		return () => {
-			// localStorage.removeItem("carouselCounter");
 			document.title = "stackSense";
 		};
 	});

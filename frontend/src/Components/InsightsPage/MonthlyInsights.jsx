@@ -91,70 +91,58 @@ const MonthlyInsights = () => {
 			monthsList[month] = monthNames[month];
 		}
 	}
-
 	return expenses.length === 0 ? (
 		<div className="flex flex-col items-center gap-4">
 			<img src="./images/fail.png" alt="" className="w-32 h-32" />
 			<span className="font-semibold opacity-50">
 				No expenses present in this time-frame
 			</span>
-			<div className="flex gap-2">
-				<WalletModal
-					setWalletList={setWalletList}
-					walletList={walletList}
-					wallets={wallets}
-				/>
-				<select
-					onChange={(e) => setMonth(e.target.value)}
-					defaultValue={month}
-					name="month-select"
-					id="month-select"
-					className="select select-bordered"
-				>
-					{Object.keys(monthsList).map((item) => {
-						return (
-							<option key={item} value={Number(item)}>
-								{monthsList[item]}
-							</option>
-						);
-					})}
-				</select>
-				<select
-					onChange={(e) => setYear(e.target.value)}
-					defaultValue={year}
-					name="year-select"
-					id="year-select"
-					className="select select-bordered"
-				>
-					{yearsArray.map((item) => {
-						return (
-							<option key={item} value={item}>
-								{item}
-							</option>
-						);
-					})}
-				</select>
-			</div>
+			<ChartInput
+				setWalletList={setWalletList}
+				walletList={walletList}
+				wallets={wallets}
+				monthsList={monthsList}
+				setMonth={setMonth}
+				month={month}
+				setYear={setYear}
+				year={year}
+				yearsArray={yearsArray}
+			/>
 		</div>
 	) : (
 		<>
 			<div className="flex flex-col gap-2 items-center sm:items-start sm:grid sm:grid-cols-[5fr_2fr] sm:w-full rounded-xl">
-				<div className="flex flex-col gap-1">
+				<div className="flex flex-col gap-2 w-full">
 					<h2 className="text-xl font-bold  underline underline-offset-2 mb-1">
 						{monthNames[month]} expenses
 					</h2>
-					<select
-						name=""
-						id=""
-						onChange={(e) => setGraphSwitcher(e.target.value)}
-						className="select select-bordered"
-					>
-						<option value="0">Total</option>
-						<option value="1">Category Breakdown</option>
-					</select>
+
+					<div className="flex gap-2">
+						<input
+							type="radio"
+							value="0"
+							name="radio_input"
+							className="radio"
+							id="total_id_radio"
+							onChange={(e) => setGraphSwitcher(e.target.value)}
+							defaultChecked
+						/>
+						<label htmlFor="total_id_radio">Total</label>
+						<input
+							type="radio"
+							value="1"
+							name="radio_input"
+							className="radio"
+							onChange={(e) => setGraphSwitcher(e.target.value)}
+							id="cat_breakdown_radio"
+						/>
+						<label htmlFor="cat_breakdown_radio">
+							Category Breakdown
+						</label>
+					</div>
 					{graphSwitcher === "0" ? (
 						<>
-							<div>
+							<div className="w-[99%]">
 								<IndividualMonthExpense
 									year={year}
 									month={month}
@@ -164,7 +152,7 @@ const MonthlyInsights = () => {
 						</>
 					) : (
 						<>
-							<div>
+							<div className="w-[99%]">
 								<LineCategories
 									year={year}
 									month={month}
@@ -175,7 +163,7 @@ const MonthlyInsights = () => {
 					)}
 				</div>
 
-				<div>
+				<div className="w-full">
 					<h2 className="text-xl font-bold  underline underline-offset-2 mb-1">
 						Category Distribution
 					</h2>
@@ -183,44 +171,71 @@ const MonthlyInsights = () => {
 					<CategoriesPie expenses={expenses} />
 				</div>
 			</div>
-			<div className="flex gap-2">
-				<WalletModal
-					setWalletList={setWalletList}
-					walletList={walletList}
-					wallets={wallets}
-				/>
-				<select
-					onChange={(e) => setMonth(e.target.value)}
-					defaultValue={month}
-					name="month-select"
-					id="month-select"
-					className="select select-bordered"
-				>
-					{Object.keys(monthsList).map((item) => {
-						return (
-							<option key={item} value={Number(item)}>
-								{monthsList[item]}
-							</option>
-						);
-					})}
-				</select>
-				<select
-					onChange={(e) => setYear(e.target.value)}
-					defaultValue={year}
-					name="year-select"
-					id="year-select"
-					className="select select-bordered"
-				>
-					{yearsArray.map((item) => {
-						return (
-							<option key={item} value={item}>
-								{item}
-							</option>
-						);
-					})}
-				</select>
-			</div>
+			<ChartInput
+				setWalletList={setWalletList}
+				walletList={walletList}
+				wallets={wallets}
+				monthsList={monthsList}
+				setMonth={setMonth}
+				month={month}
+				setYear={setYear}
+				year={year}
+				yearsArray={yearsArray}
+			/>
 		</>
 	);
 };
 export default MonthlyInsights;
+
+const ChartInput = ({
+	monthsList,
+	setWalletList,
+	walletList,
+	wallets,
+	setMonth,
+	month,
+	setYear,
+	year,
+	yearsArray,
+}) => {
+	return (
+		<div className="flex gap-2 flex-wrap justify-center">
+			<WalletModal
+				setWalletList={setWalletList}
+				walletList={walletList}
+				wallets={wallets}
+			/>
+
+			<select
+				onChange={(e) => setMonth(e.target.value)}
+				defaultValue={month}
+				name="month-select"
+				id="month-select"
+				className="select select-bordered"
+			>
+				{Object.keys(monthsList).map((item) => {
+					return (
+						<option key={item} value={Number(item)}>
+							{monthsList[item]}
+						</option>
+					);
+				})}
+			</select>
+			<select
+				onChange={(e) => setYear(e.target.value)}
+				defaultValue={year}
+				name="year-select"
+				id="year-select"
+				className="select select-bordered"
+			>
+				{yearsArray.map((item) => {
+					return (
+						<option key={item} value={item}>
+							{item}
+						</option>
+					);
+				})}
+			</select>
+		</div>
+	);
+};
