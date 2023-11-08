@@ -67,7 +67,7 @@ const LineCategories = ({ expenses, year, month }) => {
 		},
 		plugins: {
 			legend: {
-				display: false,
+				// display: false,
 			},
 		},
 		scales: {
