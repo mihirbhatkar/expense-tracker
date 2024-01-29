@@ -67,6 +67,7 @@ const InsightsPage = () => {
 					<BiSolidChevronsRight />
 				</button>
 			</div>
+       
 			{carouselCounter == 0 && <MonthlyInsights />}
 			{carouselCounter == 1 && <YearlyInsights />}
 		</div>
