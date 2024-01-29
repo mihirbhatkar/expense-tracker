@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import Loader from "../Components/Loader";
 import { BsWallet2 } from "react-icons/bs";
 import { IoWalletSharp } from "react-icons/io5";
-
+import { monthNames } from "../Data/categoriesData";
 import {
 	useCreateWalletMutation,
 	useDeleteWalletMutation,
@@ -34,6 +34,14 @@ const WalletsPage = () => {
 		setWalletMonthlyLimit(newWallet.monthlyLimit);
 		dispatch(setSelectedWallet(newWallet));
 	};
+
+	if (selectedWallet) {
+		const lastUpdatedDate = new Date(selectedWallet.updatedAt);
+		var formattedUpdateDate = `${lastUpdatedDate.getDate()} ${
+			monthNames[lastUpdatedDate.getMonth()]
+		}, ${lastUpdatedDate.getFullYear()}`;
+	}
+
 	return (
 		<>
 			<div className=" mx-auto max-w-xl gap-4 p-4">
@@ -163,7 +171,6 @@ const WalletsPage = () => {
 										value={walletMonthlyLimit}
 										onChange={(e) => {
 											const input = e.target.value;
-											console.log(input === "");
 											if (isNaN(input)) return;
 											return setWalletMonthlyLimit(
 												e.target.value
@@ -172,7 +179,7 @@ const WalletsPage = () => {
 										placeholder="Type here"
 										className="input input-bordered w-full max-w-xs"
 									/>
-									Last updated: {selectedWallet.updatedAt}
+									Last updated: {formattedUpdateDate}
 									<div className="space-x-2">
 										<button
 											type="submit"
