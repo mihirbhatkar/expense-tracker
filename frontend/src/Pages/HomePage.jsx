@@ -43,7 +43,7 @@ const HomePage = () => {
 					</div>
 					<Score wallets={wallets} />
 				</div>
-				<div className="px-4 max-w-2xl mx-auto lg:max-w-full lg:grid lg:grid-cols-2 lg:justify-self-center gap-4 flex flex-col ">
+				<div className="px-4 mb-4  max-w-2xl mx-auto lg:max-w-full lg:grid lg:grid-cols-2 lg:justify-self-center gap-4 flex flex-col ">
 					<RecentExpenses />
 				</div>
 			</>

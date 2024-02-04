@@ -38,11 +38,11 @@ const addExpense = asyncHandler(async (req, res) => {
 });
 
 // receives an expense id and deletes it from database -- { expenseId }
-// route - POST /api/expenses/deleteExpense
+// route - DELETE /api/expenses/
 // @access private
 const deleteExpense = asyncHandler(async (req, res) => {
 	const deletedExpense = await Expenses.findOneAndDelete({
-		_id: req.params.id,
+		_id: req.query.id,
 	});
 
 	// adding amount to user's wallet
