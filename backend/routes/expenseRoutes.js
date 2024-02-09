@@ -1,6 +1,10 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import {
+const expenseController = require("../controllers/expenseController.js");
+const authMiddleware = require("../middleware/authMiddleware.js");
+
+// Destructuring the exported functions
+const {
 	addExpense,
 	deleteExpense,
 	updateExpense,
@@ -8,8 +12,8 @@ import {
 	searchExpenses,
 	searchExpensesByDescription,
 	oldestExpenses,
-} from "../controllers/expenseController.js";
-import { protect } from "../middleware/authMiddleware.js";
+} = expenseController;
+const { protect } = authMiddleware;
 
 router.route("/all").post(protect, searchExpenses);
 router.route("/name").post(protect, searchExpensesByDescription);

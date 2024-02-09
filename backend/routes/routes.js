@@ -1,8 +1,8 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import userRoutes from "./userRoutes.js";
-import expenseRoutes from "./expenseRoutes.js";
-import walletRoutes from "./walletRoutes.js";
+const userRoutes = require("./userRoutes.js");
+const expenseRoutes = require("./expenseRoutes.js");
+const walletRoutes = require("./walletRoutes.js");
 
 router.use("/users", userRoutes);
 router.use("/expenses", expenseRoutes);

@@ -1,12 +1,13 @@
-import express from "express";
+// Using require instead of import
+const express = require("express");
 const router = express.Router();
-import {
-  authUser,
-  registerUser,
-  logoutUser,
-  updateUserProfile,
-} from "../controllers/userController.js";
-import { protect } from "../middleware/authMiddleware.js";
+const userController = require("../controllers/userController.js");
+const authMiddleware = require("../middleware/authMiddleware.js");
+
+// Destructuring the exported functions
+const { authUser, registerUser, logoutUser, updateUserProfile } =
+	userController;
+const { protect } = authMiddleware;
 
 router.post("/", registerUser);
 router.post("/auth", authUser);

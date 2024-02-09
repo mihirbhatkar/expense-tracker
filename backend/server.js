@@ -1,12 +1,12 @@
-import express from "express";
-import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
+const express = require("express");
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 dotenv.config();
 const port = process.env.PORT || 5000;
 
-import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
-import connectDB from "./config/db.js";
-import routes from "./routes/routes.js";
+const { notFound, errorHandler } = require("./middleware/errorMiddleware.js");
+const connectDB = require("./config/db.js");
+const routes = require("./routes/routes.js");
 
 connectDB();
 

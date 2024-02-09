@@ -1,7 +1,7 @@
-import asyncHandler from "express-async-handler";
-import Expenses from "../models/expenseModel.js";
-import User from "../models/userModel.js";
-import Wallet from "../models/walletModel.js";
+const asyncHandler = require("express-async-handler");
+const Expenses = require("../models/expenseModel.js");
+const User = require("../models/userModel.js");
+const Wallet = require("../models/walletModel.js");
 
 // receives expense data and wallet id { ...expenseData } // wallet id is in params
 // route - POST /api/expenses/addExpense
