@@ -6,10 +6,7 @@ export default defineConfig({
 	plugins: [react()],
 	server: {
 		proxy: {
-			"/api": {
-				target: "https://stack-sense-api.vercel.app:5000",
-				changeOrigin: true,
-			},
+			"/": "https://stack-sense-api:5000",
 		},
 	},
 });
