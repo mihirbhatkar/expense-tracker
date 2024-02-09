@@ -23,4 +23,4 @@ const protect = asyncHandler(async function (req, res, next) {
 	}
 });
 
-export { protect };
+module.exports = { protect };

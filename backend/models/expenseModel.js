@@ -82,4 +82,4 @@ ExpensesSchema.pre("save", function (next) {
 
 const Expenses = mongoose.model("Expenses", ExpensesSchema);
 
-export default Expenses;
+module.exports = Expenses;

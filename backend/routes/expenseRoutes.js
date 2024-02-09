@@ -23,4 +23,4 @@ router.route("/").delete(protect, deleteExpense); //  receiving the expense id
 router.route("/:id").put(protect, updateExpense); //  receiving the expense id
 router.route("/recent").get(protect, recentExpenses);
 
-export default router;
+module.exports = router;

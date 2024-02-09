@@ -14,4 +14,4 @@ router.post("/auth", authUser);
 router.post("/logout", logoutUser);
 router.route("/profile").put(protect, updateUserProfile);
 
-export default router;
+module.exports = router;

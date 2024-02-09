@@ -8,4 +8,4 @@ router.use("/users", userRoutes);
 router.use("/expenses", expenseRoutes);
 router.use("/wallets", walletRoutes);
 
-export default router;
+module.exports = router;

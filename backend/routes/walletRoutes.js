@@ -14,4 +14,4 @@ router.route("/:id").put(protect, updateWallet);
 router.route("/:id").delete(protect, deleteWallet);
 router.route("/all").get(protect, allUserWallets);
 
-export default router;
+module.exports = router;

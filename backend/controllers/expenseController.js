@@ -197,7 +197,7 @@ const oldestExpenses = asyncHandler(async (req, res) => {
 	}
 });
 
-export {
+module.exports = {
 	addExpense,
 	deleteExpense,
 	updateExpense,

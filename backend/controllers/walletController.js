@@ -69,4 +69,4 @@ const allUserWallets = asyncHandler(async (req, res) => {
 	res.status(200).json(wallets);
 });
 
-export { addWallet, updateWallet, deleteWallet, allUserWallets };
+module.exports = { addWallet, updateWallet, deleteWallet, allUserWallets };

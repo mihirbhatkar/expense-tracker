@@ -37,4 +37,4 @@ WalletSchema.pre("findOneAndDelete", async function (next) {
 
 const Wallet = mongoose.model("Wallet", WalletSchema);
 
-export default Wallet;
+module.exports = Wallet;
