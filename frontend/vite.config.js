@@ -7,7 +7,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			"/api": {
-				target: "https://stack-sense-api.vercel.app/",
+				target: "https://stack-sense-api.vercel.app:5000",
 				changeOrigin: true,
 			},
 		},
