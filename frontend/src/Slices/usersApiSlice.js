@@ -1,6 +1,6 @@
 import { apiSlice } from "./apiSlice";
 
-const USERS_URL = "https://stack-sense-api/api/users";
+const USERS_URL = "https://stack-sense-api.vercel.app/api/users";
 
 export const usersApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({

@@ -1,6 +1,6 @@
 import { apiSlice } from "./apiSlice";
 
-const WALLETS_URL = "https://stack-sense-api/api/wallets";
+const WALLETS_URL = "https://stack-sense-api.vercel.app/api/wallets";
 
 export const walletsApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({

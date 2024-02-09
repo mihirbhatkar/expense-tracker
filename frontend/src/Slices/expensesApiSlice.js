@@ -1,7 +1,7 @@
 // expensesApiSlice.js
 import { apiSlice } from "./apiSlice";
 
-const EXPENSES_URL = "https://stack-sense-api/api/expenses";
+const EXPENSES_URL = "https://stack-sense-api.vercel.app/api/expenses";
 
 export const expensesApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
