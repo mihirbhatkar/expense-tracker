@@ -12,5 +12,5 @@ limit they have set.
 + The users can also analyse their spending habits with the help of graphs integrated using Chart.js.
 
 ## Screenshots
-![home](https://drive.google.com/file/d/1cdIvHN-9GtcTL6YregsVUeTTYs4W1L7V/view)
+![home](https://github.com/mihirbhatkar/stackSense/blob/main/screenshots/home.png)
 
