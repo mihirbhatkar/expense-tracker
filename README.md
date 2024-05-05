@@ -1,4 +1,4 @@
-# stackSense
+# stackSense - https://stack-sense.vercel.app/
 
 ## Description
 + A new concept for an expense tracker web app using the MERN stack, offering user-friendly expense management and
