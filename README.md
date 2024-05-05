@@ -12,5 +12,25 @@ limit they have set.
 + The users can also analyse their spending habits with the help of graphs integrated using Chart.js.
 
 ## Screenshots
+
+Home page<br /> 
 ![home](https://github.com/mihirbhatkar/stackSense/blob/main/screenshots/home.png)
 
+Modal for adding expenses<br /> 
+![modal](https://github.com/mihirbhatkar/stackSense/blob/main/screenshots/modal.png)
+
+Expenses history<br /> 
+![search](https://github.com/mihirbhatkar/stackSense/blob/main/screenshots/search.png)
+
+Insights page<br /> 
+![monthly](https://github.com/mihirbhatkar/stackSense/blob/main/screenshots/monthly%20insights.png)<br /> 
+![yearly](https://github.com/mihirbhatkar/stackSense/blob/main/screenshots/yearly%20insights.png)
+
+Wallets page<br /> 
+![wallets](https://github.com/mihirbhatkar/stackSense/blob/main/screenshots/wallets.png)
+
+Profile page<br /> 
+![profile](https://github.com/mihirbhatkar/stackSense/blob/main/screenshots/profile.png)
+
+All pages are responsive and available in dark mode!<br /> 
+![mobile](https://github.com/mihirbhatkar/stackSense/blob/main/screenshots/mobile.png)
